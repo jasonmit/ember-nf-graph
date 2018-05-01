@@ -3,7 +3,7 @@
 module.exports = {
   name: 'ember-nf-graph',
 
-  included(app) {
+  included() {
     this._super.included.apply(this, arguments);
 
     this.import('node_modules/d3/d3.js');
