@@ -36,6 +36,22 @@ export default Component.extend({
   graph: null,
 
   /**
+    The name of the hoverChange action to fire
+    @property hoverChange
+    @type String
+    @default null
+  */
+  hoverChange: null,
+
+  /**
+    The name of the hoverEnd action to fire
+    @property hoverEnd
+    @type String
+    @default null
+  */
+  hoverEnd: null,
+
+  /**
     The SVG transform for positioning the graph content
     @property transform
     @type String
@@ -118,15 +134,7 @@ export default Component.extend({
     return A(lanes);
   }),
 
-  /**
-    The name of the hoverChange action to fire
-    @property hoverChange
-    @type String
-    @default null
-  */
-  hoverChange: null,
-
-  mouseMove: function(e) {
+  mouseMove(e) {
     let context = GraphMouseEvent.create({
       originalEvent: e,
       source: this,
@@ -140,15 +148,7 @@ export default Component.extend({
     }
   },
 
-  /**
-    The name of the hoverEnd action to fire
-    @property hoverEnd
-    @type String
-    @default null
-  */
-  hoverEnd: null,
-
-  mouseLeave: function(e) {
+  mouseLeave(e) {
     let context = GraphMouseEvent.create({
       originalEvent: e,
       source: this,
