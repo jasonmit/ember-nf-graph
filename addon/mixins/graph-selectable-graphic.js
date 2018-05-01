@@ -15,8 +15,8 @@ export default Mixin.create({
   _selected: false,
 
   /**
-    Gets or sets whether or not the graphic is "selectable". Meaning can be "selected" on the nf-graph 
-    via some action (usually click). The component will then show up in the nf-graph parent's selected 
+    Gets or sets whether or not the graphic is "selectable". Meaning can be "selected" on the nf-graph
+    via some action (usually click). The component will then show up in the nf-graph parent's selected
     property.
     @property selectable
     @type Boolean
@@ -41,20 +41,23 @@ export default Mixin.create({
 
   /**
     Makes calls to the parent nf-graph to update it's
-    `selected` property. Observes changes to `selected` and also 
+    `selected` property. Observes changes to `selected` and also
     fires on `didInsertElement`.
     @method _updateGraphSelected
     @private
   */
-  _updateGraphSelected: on('didInsertElement', observer('selected', function() {
-    once(this, function(){
-      let selected = this.get('selected');
-      let graph = this.get('graph');
-      if(selected) {
-        graph.selectGraphic(this);
-      } else {
-        graph.deselectGraphic(this);
-      }
-    });
-  })),
+  _updateGraphSelected: on(
+    'didInsertElement',
+    observer('selected', function() {
+      once(this, function() {
+        let selected = this.get('selected');
+        let graph = this.get('graph');
+        if (selected) {
+          graph.selectGraphic(this);
+        } else {
+          graph.deselectGraphic(this);
+        }
+      });
+    })
+  )
 });

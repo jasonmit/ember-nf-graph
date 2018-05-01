@@ -1,7 +1,7 @@
 import Mixin from '@ember/object/mixin';
 import { computed } from '@ember/object';
 
-let scaleProperty = function(scaleKey, zoomKey, offsetKey){
+let scaleProperty = function(scaleKey, zoomKey, offsetKey) {
   return computed(scaleKey, zoomKey, offsetKey, {
     get() {
       // console.log('HERE');
@@ -9,7 +9,7 @@ let scaleProperty = function(scaleKey, zoomKey, offsetKey){
       let zoom = this.get(zoomKey);
       let offset = this.get(offsetKey);
 
-      if(zoom === 1 && offset === 0) {
+      if (zoom === 1 && offset === 0) {
         return scale;
       }
 
@@ -32,7 +32,6 @@ let scaleProperty = function(scaleKey, zoomKey, offsetKey){
   @class graph-requires-scale-source
 */
 export default Mixin.create({
-
   /**
     The scale source
     @property scaleSource
@@ -78,7 +77,7 @@ export default Mixin.create({
       return this._scaleZoomX || 1;
     },
     set(key, value) {
-      return this._scaleZoomX = +value || 1;
+      return (this._scaleZoomX = +value || 1);
     }
   }),
 
@@ -93,7 +92,7 @@ export default Mixin.create({
       return this._scaleZoomY || 1;
     },
     set(key, value) {
-      return this._scaleZoomY = +value || 1;
+      return (this._scaleZoomY = +value || 1);
     }
   }),
 
@@ -108,7 +107,7 @@ export default Mixin.create({
       return this._scaleOffsetX || 0;
     },
     set(key, value) {
-      return this._scaleOffsetX = +value || 0;
+      return (this._scaleOffsetX = +value || 0);
     }
   }),
 
@@ -123,7 +122,7 @@ export default Mixin.create({
       return this._scaleOffsetY || 0;
     },
     set(key, value) {
-      return this._scaleOffsetY = +value || 0;
+      return (this._scaleOffsetY = +value || 0);
     }
   })
 });

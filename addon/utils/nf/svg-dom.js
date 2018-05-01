@@ -10,15 +10,15 @@ import { isPresent } from '@ember/utils';
 */
 function inlineAllStyles(element) {
   let styles = getComputedStyle(element);
-  for(let key in styles) {
-    if(styles.hasOwnProperty(key)) {
+  for (let key in styles) {
+    if (styles.hasOwnProperty(key)) {
       element.style[key] = styles[key];
     }
   }
 
-  for(let i = 0; i < element.childNodes.length; i++) {
+  for (let i = 0; i < element.childNodes.length; i++) {
     let node = element.childNodes[i];
-    if(node.nodeType === 1) {
+    if (node.nodeType === 1) {
       inlineAllStyles(node);
     }
   }
@@ -44,14 +44,16 @@ export function svgToImageUrl(svg, callback) {
   inlineAllStyles(clone);
 
   let img = new Image();
-  let blob = new Blob([clone.outerHTML], { type: 'image/svg+xml;charset=utf-8' });
+  let blob = new Blob([clone.outerHTML], {
+    type: 'image/svg+xml;charset=utf-8'
+  });
   clone.remove();
   let url = URL.createObjectURL(blob);
 
-  img.onload = function(){
+  img.onload = function() {
     context.drawImage(img, 0, 0);
     URL.revokeObjectURL(url);
-    if(callback) {
+    if (callback) {
       callback(canvas.toDataURL());
     }
     canvas.remove();
@@ -81,7 +83,7 @@ export function downloadSvg(svg) {
 export function getMousePoint(container, e) {
   let x, y;
 
-  if(e && isPresent(e.clientX) && isPresent(e.clientY)) {
+  if (e && isPresent(e.clientX) && isPresent(e.clientY)) {
     let svg = container.ownerSVGElement || container;
     if (svg.createSVGPoint) {
       let point = svg.createSVGPoint();
@@ -99,7 +101,7 @@ export function getMousePoint(container, e) {
 
   return {
     x: x,
-    y: y,
+    y: y
   };
 }
 

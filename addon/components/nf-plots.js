@@ -25,23 +25,24 @@ export default Component.extend(DataGraphic, RequireScaleSource, {
     @readonly
     @private
   */
-  plotData: computed('renderedData.[]', function(){
+  plotData: computed('renderedData.[]', function() {
     let renderedData = this.get('renderedData');
-    if(renderedData && isArray(renderedData)) {
-      return A(renderedData.map(function(d) {
-        return {
-          x: d[0],
-          y: d[1],
-          data: d.data,
-        };
-      }));
+    if (renderedData && isArray(renderedData)) {
+      return A(
+        renderedData.map(function(d) {
+          return {
+            x: d[0],
+            y: d[1],
+            data: d.data
+          };
+        })
+      );
     }
   }),
-
 
   actions: {
     itemClicked: function(e) {
       this.sendAction('action', e);
-    },
-  },
+    }
+  }
 });

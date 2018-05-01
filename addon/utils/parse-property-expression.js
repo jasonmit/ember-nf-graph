@@ -3,7 +3,7 @@
   can retrieve a value from that path off of any object when called.
 
   ### Example
-        
+
         import parsePropertyExpr from 'utils/parse-property-expr';
 
         let test = { foo: { bar: ['apple', 'banana'] } };
@@ -20,8 +20,7 @@
   @class parse-property-expression
 */
 
-
-/**  
+/**
   @method default
   @param expr {String} the expression to parse
   @return {Function} a function that when called with an object,
@@ -32,36 +31,36 @@ export default function parsePropertyExpression(expr) {
   let isIndex = false;
   let token = '';
   let tokens = [];
-  let addToken = function(){
-    if(token === '') {
+  let addToken = function() {
+    if (token === '') {
       return;
     }
-    if(isIndex) {
+    if (isIndex) {
       token = +token;
     }
     tokens.push(token);
     token = '';
-    isIndex = c === '[';    
+    isIndex = c === '[';
   };
-  
-  for(i = 0; i < expr.length; i++) {
+
+  for (i = 0; i < expr.length; i++) {
     c = expr[i];
-    if('[].'.indexOf(c) >= 0) {
+    if ('[].'.indexOf(c) >= 0) {
       addToken();
     } else {
       token += c;
     }
   }
-  
+
   addToken();
-  
-  return function(obj){
+
+  return function(obj) {
     let i, next;
     let result = obj[tokens[0]];
-    if(result) {
-      for(i = 1; i < tokens.length; i++) {
+    if (result) {
+      for (i = 1; i < tokens.length; i++) {
         next = result[tokens[i]];
-        if(typeof next !== 'object') {
+        if (typeof next !== 'object') {
           return next;
         }
         result = next;

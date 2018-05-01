@@ -104,36 +104,39 @@ export default Mixin.create({
     @method _trackedDataChanged
     @private
   */
-  _trackedDataChanged: observer('trackedData', function(){
+  _trackedDataChanged: observer('trackedData', function() {
     let trackedData = this.get('trackedData');
     this.set('hoverData', this._hovered ? trackedData : null);
 
-    if(this.get('didTrack') && trackedData) {
+    if (this.get('didTrack') && trackedData) {
       this.sendAction('didTrack', {
         x: trackedData.x,
         y: trackedData.y,
         data: trackedData.data,
         source: this,
-        graph: this.get('graph'),
+        graph: this.get('graph')
       });
     }
   }),
 
-  _cleanup: function(){
-    if(this._onHoverCleanup) {
+  _cleanup: function() {
+    if (this._onHoverCleanup) {
       this._onHoverCleanup();
     }
-    if(this._onEndCleanup) {
+    if (this._onEndCleanup) {
       this._onEndCleanup();
     }
   },
 
   _updateTrackingHandling() {
-    let { trackingMode, selected } = this.getProperties('trackingMode', 'selected');
+    let { trackingMode, selected } = this.getProperties(
+      'trackingMode',
+      'selected'
+    );
 
     this._cleanup();
 
-    switch(trackingMode) {
+    switch (trackingMode) {
       case 'hover':
         this._onHoverTrack();
         this._onEndUntrack();
@@ -147,19 +150,19 @@ export default Mixin.create({
         this._onEndSnapLast();
         break;
       case 'selected-hover':
-        if(selected) {
+        if (selected) {
           this._onHoverTrack();
           this._onEndUntrack();
         }
         break;
       case 'selected-snap-first':
-        if(selected) {
+        if (selected) {
           this._onHoverTrack();
           this._onEndSnapFirst();
         }
         break;
       case 'selected-snap-last':
-        if(selected) {
+        if (selected) {
           this._onHoverTrack();
           this._onEndSnapLast();
         }
@@ -200,7 +203,7 @@ export default Mixin.create({
       content.off('mouseout', mouseoutHandler);
     };
 
-    if(!this._hovered) {
+    if (!this._hovered) {
       this.set('trackedData', null);
     }
   },
@@ -216,7 +219,7 @@ export default Mixin.create({
     };
 
     let changeHandler = () => {
-      if(!this._hovered) {
+      if (!this._hovered) {
         schedule('afterRender', () => {
           this.set('trackedData', this.get('lastVisibleData'));
         });
@@ -243,7 +246,7 @@ export default Mixin.create({
     };
 
     let changeHandler = () => {
-      if(!this._hovered) {
+      if (!this._hovered) {
         this.set('trackedData', this.get('firstVisibleData'));
       }
     };
@@ -259,9 +262,12 @@ export default Mixin.create({
     changeHandler();
   },
 
-  _trackingModeChanged: on('init', observer('trackingMode', 'selected', function() {
-    scheduleOnce('afterRender', this, this._updateTrackingHandling);
-  })),
+  _trackingModeChanged: on(
+    'init',
+    observer('trackingMode', 'selected', function() {
+      scheduleOnce('afterRender', this, this._updateTrackingHandling);
+    })
+  ),
 
   _getEventObject(e) {
     let { xScale, yScale } = this.getProperties('xScale', 'yScale');
@@ -271,13 +277,13 @@ export default Mixin.create({
     let graphY = yScale.invert(point.y);
     let near = this.getDataNearXRange(point.x);
 
-    if(!near) {
+    if (!near) {
       return {
         point,
         graphX,
         graphY,
         mouseX: point.x,
-        mouseY: point.y,
+        mouseY: point.y
       };
     }
 

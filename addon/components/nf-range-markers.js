@@ -64,7 +64,7 @@ export default Component.extend({
     let prevMarker = markers[markers.length - 1];
 
     schedule('afterRender', () => {
-      if(prevMarker) {
+      if (prevMarker) {
         marker.set('prevMarker', prevMarker);
         prevMarker.set('nextMarker', marker);
       }
@@ -80,18 +80,18 @@ export default Component.extend({
     @param marker {nf-range-marker} the range marker to remove from the `markers` list.
   */
   unregisterMarker: function(marker) {
-    if(marker) {
+    if (marker) {
       schedule('afterRender', () => {
         let next = marker.nextMarker;
         let prev = marker.prevMarker;
-        if(prev) {
+        if (prev) {
           prev.set('nextMarker', next);
         }
-        if(next) {
+        if (next) {
           next.set('prevMarker', prev);
         }
         this.get('markers').removeObject(marker);
       });
     }
-  },
+  }
 });

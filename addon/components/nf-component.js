@@ -44,12 +44,15 @@ const NfComponent = Component.extend({
     @type d3.nf-graph
     @default graph
   */
- scaleSource: null,
+  scaleSource: null,
 
- init(){
-   this._super(...arguments);
-   assert('[ember-nf-graph] A component name must be passed into nf-component.', isPresent(this.get('componentName')));
- }
+  init() {
+    this._super(...arguments);
+    assert(
+      '[ember-nf-graph] A component name must be passed into nf-component.',
+      isPresent(this.get('componentName'))
+    );
+  }
 });
 
 NfComponent.reopenClass({

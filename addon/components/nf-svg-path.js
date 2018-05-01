@@ -55,11 +55,11 @@ export default Component.extend(RequiresScaleSource, SelectableGraphic, {
     @property svgPoints
     @type Array
   */
-  svgPoints: computed('points.[]', 'xScale', 'yScale', function(){
+  svgPoints: computed('points.[]', 'xScale', 'yScale', function() {
     let points = this.get('points');
     let xScale = this.get('xScale');
     let yScale = this.get('yScale');
-    if(isArray(points) && points.length > 0) {
+    if (isArray(points) && points.length > 0) {
       return points.map(function(v) {
         let dx = normalizeScale(xScale, v[0]);
         let dy = normalizeScale(yScale, v[1]);
@@ -69,8 +69,8 @@ export default Component.extend(RequiresScaleSource, SelectableGraphic, {
     }
   }),
 
-  click: function(){
-    if(this.get('selectable')) {
+  click: function() {
+    if (this.get('selectable')) {
       this.toggleProperty('selected');
     }
   },
@@ -80,11 +80,11 @@ export default Component.extend(RequiresScaleSource, SelectableGraphic, {
     @property d
     @type String
   */
-  d: computed('svgPoints', function(){
+  d: computed('svgPoints', function() {
     let svgPoints = this.get('svgPoints');
-    if(isArray(svgPoints) && svgPoints.length > 0) {
+    if (isArray(svgPoints) && svgPoints.length > 0) {
       return svgPoints.reduce(function(d, pt, i) {
-        if(i === 0) {
+        if (i === 0) {
           d += 'M' + pt[0] + ',' + pt[1];
         }
         d += ' ' + pt[2] + pt[0] + ',' + pt[1];
@@ -93,5 +93,5 @@ export default Component.extend(RequiresScaleSource, SelectableGraphic, {
     } else {
       return 'M0,0';
     }
-  }),
+  })
 });

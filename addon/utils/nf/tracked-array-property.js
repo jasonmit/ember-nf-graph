@@ -5,26 +5,29 @@ import { computed, get, set } from '@ember/object';
 function trackedArrayProperty(arraySourceProp, trackByProp, backingField) {
   let arraySourceDependency = arraySourceProp + '.[]';
 
-  backingField = backingField || '_%@_trackBy_%@'.fmt(arraySourceProp, trackByProp);
+  backingField =
+    backingField || '_%@_trackBy_%@'.fmt(arraySourceProp, trackByProp);
 
   return computed(arraySourceDependency, {
     get() {
       let array = this.get(backingField);
 
-      if(!isArray(array)){
+      if (!isArray(array)) {
         array = A();
       }
 
       let trackBy = trackByProp ? this.get(trackByProp) : null;
-      let keyFn = !trackBy ? function(d, i) {
-        return i;
-      } : function(d) {
-        return get(d, trackBy);
-      };
+      let keyFn = !trackBy
+        ? function(d, i) {
+            return i;
+          }
+        : function(d) {
+            return get(d, trackBy);
+          };
 
       let source = this.get(arraySourceProp);
 
-      if(!isArray(source) || source.length === 0) {
+      if (!isArray(source) || source.length === 0) {
         array = A();
       } else {
         let sourceKeys = [];
@@ -38,10 +41,10 @@ function trackedArrayProperty(arraySourceProp, trackByProp, backingField) {
 
           set(d, '__meta__trackedKey', key);
 
-          if(found) {
+          if (found) {
             keys(d).forEach(function(k) {
               let v = get(d, k);
-              if(get(found, k) !== v) {
+              if (get(found, k) !== v) {
                 set(found, k, v);
               }
             });
@@ -51,10 +54,10 @@ function trackedArrayProperty(arraySourceProp, trackByProp, backingField) {
         });
 
         let d, i;
-        for(i = array.length - 1; i >= 0; i--) {
+        for (i = array.length - 1; i >= 0; i--) {
           d = array[i];
           let key = keyFn(d, i);
-          if(sourceKeys.indexOf(key) === -1) {
+          if (sourceKeys.indexOf(key) === -1) {
             array.removeObject(d);
           }
         }

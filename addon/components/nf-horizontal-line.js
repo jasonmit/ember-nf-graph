@@ -42,7 +42,7 @@ export default Component.extend(RequireScaleSource, {
     @private
     @readonly
   */
-  lineY: computed('y', 'yScale', function(){
+  lineY: computed('y', 'yScale', function() {
     let y = this.get('y');
     let yScale = this.get('yScale');
     let py = yScale ? yScale(y) : -1;
@@ -65,5 +65,5 @@ export default Component.extend(RequireScaleSource, {
     @private
     @readonly
   */
-  x2: alias('graph.graphWidth'),
+  x2: alias('graph.graphWidth')
 });

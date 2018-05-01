@@ -21,5 +21,5 @@ export default GraphPosition.extend({
     @type any
     @default null
   */
-  data: null,
+  data: null
 });

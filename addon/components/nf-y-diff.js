@@ -30,7 +30,11 @@ export default Component.extend(RequireScaleSource, {
 
   attributeBindings: ['transform'],
 
-  classNameBindings: [':nf-y-diff', 'isPositive:positive:negative', 'isOrientRight:orient-right:orient-left'],
+  classNameBindings: [
+    ':nf-y-diff',
+    'isPositive:positive:negative',
+    'isOrientRight:orient-right:orient-left'
+  ],
 
   /**
     The parent graph for a component.
@@ -78,7 +82,7 @@ export default Component.extend(RequireScaleSource, {
     @type Number
     @readonly
   */
-  yCenter: computed('yA', 'yB', function(){
+  yCenter: computed('yA', 'yB', function() {
     let yA = +this.get('yA') || 0;
     let yB = +this.get('yB') || 0;
     return (yA + yB) / 2;
@@ -89,7 +93,7 @@ export default Component.extend(RequireScaleSource, {
     @property yB
     @type Number
   */
-  yB: computed('yScale', 'b', function(){
+  yB: computed('yScale', 'b', function() {
     return normalizeScale(this.get('yScale'), this.get('b'));
   }),
 
@@ -117,7 +121,7 @@ export default Component.extend(RequireScaleSource, {
     @type Number
     @readonly
   */
-  diff: computed('a', 'b', function(){
+  diff: computed('a', 'b', function() {
     return +this.get('b') - this.get('a');
   }),
 
@@ -151,13 +155,13 @@ export default Component.extend(RequireScaleSource, {
     @type Number
     @readonly
   */
-  contentX: computed('isOrientRight', 'width', 'contentPadding', function(){
+  contentX: computed('isOrientRight', 'width', 'contentPadding', function() {
     let contentPadding = this.get('contentPadding');
     let width = this.get('width');
     return this.get('isOrientRight') ? width - contentPadding : contentPadding;
   }),
 
-  rectPath: computed('yA', 'yB', 'width', function(){
+  rectPath: computed('yA', 'yB', 'width', function() {
     let x = 0;
     let w = +this.get('width') || 0;
     let x2 = x + w;
@@ -173,7 +177,7 @@ export default Component.extend(RequireScaleSource, {
     @private
     @readonly
   */
-  contentTransform: computed('contentX', 'yCenter', function(){
+  contentTransform: computed('contentX', 'yCenter', function() {
     let contentX = this.get('contentX');
     let yCenter = this.get('yCenter');
     return `translate(${contentX} ${yCenter})`;
@@ -184,12 +188,13 @@ export default Component.extend(RequireScaleSource, {
     into the DOM
     @method didInsertElement
   */
-  didInsertElement: function(){
+  didInsertElement: function() {
     let element = this.get('element');
     let g = d3.select(element);
 
     let rectPath = this.get('rectPath');
-    let rect = g.insert('path', ':first-child')
+    let rect = g
+      .insert('path', ':first-child')
       .attr('class', 'nf-y-diff-rect')
       .attr('d', rectPath);
 
@@ -205,18 +210,22 @@ export default Component.extend(RequireScaleSource, {
     Performs the transition (animation) of the elements.
     @method doTransition
   */
-  doTransition: function(){
+  doTransition: function() {
     let duration = this.get('duration');
     let rectElement = this.get('rectElement');
     let contentElement = this.get('contentElement');
 
-    if(rectElement) {
-      rectElement.transition().duration(duration)
+    if (rectElement) {
+      rectElement
+        .transition()
+        .duration(duration)
         .attr('d', this.get('rectPath'));
     }
 
-    if(contentElement) {
-      contentElement.transition().duration(duration)
+    if (contentElement) {
+      contentElement
+        .transition()
+        .duration(duration)
         .attr('transform', this.get('contentTransform'));
     }
   },
@@ -225,7 +234,7 @@ export default Component.extend(RequireScaleSource, {
     Schedules a transition once at afterRender.
     @method transition
   */
-  transition: observer('a', 'b', function(){
+  transition: observer('a', 'b', function() {
     once(this, this.doTransition);
   }),
 
@@ -234,26 +243,29 @@ export default Component.extend(RequireScaleSource, {
     not require transitioning, because they're width-related.
     @method doAdjustWidth
   */
-  doAdjustWidth: function(){
+  doAdjustWidth: function() {
     let contentElement = this.get('contentElement');
-    if(contentElement) {
+    if (contentElement) {
       let contentTransform = this.get('contentTransform');
       contentElement.attr('transform', contentTransform);
     }
   },
 
-  adjustGraphHeight: on('didInsertElement', observer('graph.graphHeight', function(){
-    let rectElement = this.get('rectElement');
-    let contentElement = this.get('contentElement');
+  adjustGraphHeight: on(
+    'didInsertElement',
+    observer('graph.graphHeight', function() {
+      let rectElement = this.get('rectElement');
+      let contentElement = this.get('contentElement');
 
-    if(rectElement) {
-      rectElement.attr('d', this.get('rectPath'));
-    }
+      if (rectElement) {
+        rectElement.attr('d', this.get('rectPath'));
+      }
 
-    if(contentElement) {
-      contentElement.attr('transform', this.get('contentTransform'));
-    }
-  })),
+      if (contentElement) {
+        contentElement.attr('transform', this.get('contentTransform'));
+      }
+    })
+  ),
 
   /**
     Schedules a call to `doAdjustWidth` on afterRender
@@ -261,8 +273,8 @@ export default Component.extend(RequireScaleSource, {
   */
   adjustWidth: on(
     'didInsertElement',
-    observer('isOrientRight', 'width', 'contentPadding', function(){
+    observer('isOrientRight', 'width', 'contentPadding', function() {
       once(this, this.doAdjustWidth);
     })
-  ),
+  )
 });

@@ -61,7 +61,7 @@ export default Component.extend(RequireScaleSource, {
     @private
     @readonly
   */
-  cx: computed('x', 'xScale', 'hasX', function(){
+  cx: computed('x', 'xScale', 'hasX', function() {
     let x = this.get('x');
     let xScale = this.get('xScale');
     let hasX = this.get('hasX');
@@ -89,5 +89,5 @@ export default Component.extend(RequireScaleSource, {
     @private
     @readonly
   */
-  isVisible: and('hasX', 'hasY'),
+  isVisible: and('hasX', 'hasY')
 });

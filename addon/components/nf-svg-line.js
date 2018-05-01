@@ -21,8 +21,8 @@ export default Component.extend(RequiresScaleSource, SelectableGraphic, {
 
   attributeBindings: ['svgX1:x1', 'svgX2:x2', 'svgY1:y1', 'svgY2:y2'],
 
-  click: function(){
-    if(this.get('selectable')) {
+  click: function() {
+    if (this.get('selectable')) {
       this.toggleProperty('selected');
     }
   },
@@ -68,7 +68,7 @@ export default Component.extend(RequiresScaleSource, SelectableGraphic, {
     @property svgX1
     @type Number
   */
-  svgX1: computed('x1', 'xScale', function(){
+  svgX1: computed('x1', 'xScale', function() {
     return normalizeScale(this.get('xScale'), this.get('x1'));
   }),
 
@@ -77,7 +77,7 @@ export default Component.extend(RequiresScaleSource, SelectableGraphic, {
     @property svgX2
     @type Number
   */
-  svgX2: computed('x2', 'xScale', function(){
+  svgX2: computed('x2', 'xScale', function() {
     return normalizeScale(this.get('xScale'), this.get('x2'));
   }),
 
@@ -86,7 +86,7 @@ export default Component.extend(RequiresScaleSource, SelectableGraphic, {
     @property svgY1
     @type Number
   */
-  svgY1: computed('y1', 'yScale', function(){
+  svgY1: computed('y1', 'yScale', function() {
     return normalizeScale(this.get('yScale'), this.get('y1'));
   }),
 
@@ -95,7 +95,7 @@ export default Component.extend(RequiresScaleSource, SelectableGraphic, {
     @property svgY2
     @type Number
   */
-  svgY2: computed('y2', 'yScale', function(){
+  svgY2: computed('y2', 'yScale', function() {
     return normalizeScale(this.get('yScale'), this.get('y2'));
-  }),
+  })
 });

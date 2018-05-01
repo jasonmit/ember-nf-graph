@@ -22,9 +22,9 @@ export default Component.extend({
 
   attributeBindings: ['transform', 'clip-path'],
 
-  'clip-path': computed('graph.contentClipPathId', function(){
+  'clip-path': computed('graph.contentClipPathId', function() {
     let clipPathId = this.get('graph.contentClipPathId');
-    return  `url('#${clipPathId}')`;
+    return `url('#${clipPathId}')`;
   }),
 
   /**
@@ -41,7 +41,7 @@ export default Component.extend({
     @type String
     @readonly
   */
-  transform: computed('x', 'y', function(){
+  transform: computed('x', 'y', function() {
     let x = this.get('x');
     let y = this.get('y');
     return `translate(${x} ${y})`;
@@ -79,19 +79,18 @@ export default Component.extend({
   */
   height: alias('graph.graphHeight'),
 
-
   /**
     An array containing models to render the grid lanes
     @property gridLanes
     @type Array
     @readonly
   */
-  gridLanes: computed('graph.yAxis.ticks', 'width', 'height', function () {
+  gridLanes: computed('graph.yAxis.ticks', 'width', 'height', function() {
     let ticks = this.get('graph.yAxis.ticks');
     let width = this.get('width');
     let height = this.get('height');
 
-    if(!ticks || ticks.length === 0) {
+    if (!ticks || ticks.length === 0) {
       return A();
     }
 
@@ -99,13 +98,13 @@ export default Component.extend({
       return a.y - b.y;
     });
 
-    if(sorted[0].y !== 0) {
+    if (sorted[0].y !== 0) {
       sorted.unshift({ y: 0 });
     }
 
     let lanes = sorted.reduce(function(lanes, tick, i) {
       let y = tick.y;
-      let next = sorted[i+1] || { y: height };
+      let next = sorted[i + 1] || { y: height };
       let h = Math.max(next.y - tick.y, 0);
       lanes.push({
         x: 0,
@@ -131,12 +130,12 @@ export default Component.extend({
     let context = GraphMouseEvent.create({
       originalEvent: e,
       source: this,
-      graphContentElement: this.element,
+      graphContentElement: this.element
     });
 
     this.trigger('didHoverChange', context);
 
-    if(this.get('hoverChange')) {
+    if (this.get('hoverChange')) {
       this.sendAction('hoverChange', context);
     }
   },
@@ -157,7 +156,7 @@ export default Component.extend({
     });
     this.trigger('didHoverEnd', context);
 
-    if(this.get('hoverEnd')) {
+    if (this.get('hoverEnd')) {
       this.sendAction('hoverEnd', context);
     }
   },
@@ -170,11 +169,11 @@ export default Component.extend({
   */
   frets: alias('graph.xAxis.ticks'),
 
-  init(){
+  init() {
     this._super(...arguments);
 
     schedule('afterRender', () => {
       this.set('graph.content', this);
     });
-  },
+  }
 });

@@ -18,5 +18,5 @@ export default Component.extend({
     @property scaleSource
     @default null
     */
-  scaleSource: null,
+  scaleSource: null
 });

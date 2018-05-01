@@ -23,25 +23,24 @@ function identity(x) {
 */
 export function nearestIndexTo(arr, val, mappingFn) {
   mappingFn = mappingFn || identity;
-  let startIndex  = 0;
+  let startIndex = 0;
   let stopIndex = arr.length - 1;
   let middle = (stopIndex + startIndex) / 2;
   let a = Math.floor(middle);
   let b = Math.floor(middle + 1);
 
-  let getItem = function(i){
+  let getItem = function(i) {
     return mappingFn(arr[i]);
   };
 
   let av = getItem(a);
   let bv = getItem(b);
 
-  while(!(av <= val && val <= bv) && startIndex < stopIndex){
-
-    if (val < av){
-        stopIndex = middle - 1;
-    } else if (val > av){
-        startIndex = middle + 1;
+  while (!(av <= val && val <= bv) && startIndex < stopIndex) {
+    if (val < av) {
+      stopIndex = middle - 1;
+    } else if (val > av) {
+      startIndex = middle + 1;
     }
 
     middle = (stopIndex + startIndex) / 2;
@@ -51,7 +50,7 @@ export function nearestIndexTo(arr, val, mappingFn) {
     bv = getItem(b);
   }
 
-  return (Math.abs(val - av) < Math.abs(val - bv)) ? a : b;
+  return Math.abs(val - av) < Math.abs(val - bv) ? a : b;
 }
 
 let NATURAL_SORT_REGEXP = /[+-]?\d+\.?\d*|\S+/g;
@@ -68,7 +67,7 @@ function naturalTokenize(item) {
   NATURAL_SORT_REGEXP.lastIndex = 0;
   let matches;
   let tokens = [];
-  while(matches === NATURAL_SORT_REGEXP.exec(item)) {
+  while (matches === NATURAL_SORT_REGEXP.exec(item)) {
     tokens.push(matches[0]);
   }
   return tokens;
@@ -85,23 +84,27 @@ function naturalTokenize(item) {
 export function naturalCompare(a, b) {
   let aTokens = naturalTokenize(a);
   let bTokens = naturalTokenize(b);
-  let i = 0, bx, ax, na, nb;
+  let i = 0,
+    bx,
+    ax,
+    na,
+    nb;
 
-  while((ax = aTokens[i]) && (bx = bTokens[i++])) {
+  while ((ax = aTokens[i]) && (bx = bTokens[i++])) {
     na = +ax;
     nb = +bx;
 
-    if(nb === nb && na === na) {
-      if(na !== nb) {
-         return na > nb ? 1 : -1;
+    if (nb === nb && na === na) {
+      if (na !== nb) {
+        return na > nb ? 1 : -1;
       } else {
-        if(ax.length !== bx.length) {
+        if (ax.length !== bx.length) {
           return ax.length > bx.length ? 1 : -1;
         }
       }
     }
 
-    if(ax !== bx) {
+    if (ax !== bx) {
       return ax > bx ? 1 : -1;
     }
   }

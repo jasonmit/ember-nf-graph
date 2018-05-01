@@ -55,7 +55,7 @@ export default Component.extend(RequireScaleSource, {
     @private
     @readonly
   */
-  isVisible: computed('y', function(){
+  isVisible: computed('y', function() {
     return !isNaN(this.get('y'));
   }),
 
@@ -70,7 +70,7 @@ export default Component.extend(RequireScaleSource, {
     let yScale = this.get('yScale');
     let paddingTop = this.get('graph.paddingTop');
     let vy = 0;
-    if(yScale) {
+    if (yScale) {
       vy = yScale(value) || 0;
     }
     return vy + paddingTop;
@@ -83,7 +83,7 @@ export default Component.extend(RequireScaleSource, {
     @private
     @readonly
   */
-  transform: computed('y', 'graph.width', function(){
+  transform: computed('y', 'graph.width', function() {
     let y = this.get('y');
     let graphWidth = this.get('graph.width');
     let x0 = graphWidth - 6;
@@ -96,11 +96,13 @@ export default Component.extend(RequireScaleSource, {
     @method _transitionalUpdate
     @private
   */
-  _transitionalUpdate: function(){
+  _transitionalUpdate: function() {
     let transform = this.get('transform');
     let path = this.get('path');
     let duration = this.get('duration');
-    path.transition().duration(duration)
+    path
+      .transition()
+      .duration(duration)
       .attr('transform', transform);
   },
 
@@ -109,16 +111,19 @@ export default Component.extend(RequireScaleSource, {
     @method _triggerTransition
     @private
   */
-  _triggerTransition: on('init', observer('value', function(){
-    scheduleOnce('afterRender', this, this._transitionalUpdate);
-  })),
+  _triggerTransition: on(
+    'init',
+    observer('value', function() {
+      scheduleOnce('afterRender', this, this._transitionalUpdate);
+    })
+  ),
 
   /**
     Updates the tick position without a transition.
     @method _nonTransitionalUpdate
     @private
   */
-  _nonTransitionalUpdate: function(){
+  _nonTransitionalUpdate: function() {
     let transform = this.get('transform');
     let path = this.get('path');
     path.attr('transform', transform);
@@ -129,7 +134,7 @@ export default Component.extend(RequireScaleSource, {
     @method _triggerNonTransitionalUpdate
     @private
   */
-  _triggerNonTransitionalUpdate: observer('graph.width', function(){
+  _triggerNonTransitionalUpdate: observer('graph.width', function() {
     scheduleOnce('afterRender', this, this._nonTransitionalUpdate);
   }),
 
@@ -138,7 +143,7 @@ export default Component.extend(RequireScaleSource, {
     @method _getElements
     @private
   */
-  _getElements: on('didInsertElement', function(){
+  _getElements: on('didInsertElement', function() {
     let g = d3.select(this.$()[0]);
     let path = g.selectAll('path').data([0]);
     this.set('path', path);

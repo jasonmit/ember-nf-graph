@@ -123,5 +123,5 @@ export default EmberObject.extend({
     @type Event
     @default null
   */
-  originalEvent: null,
+  originalEvent: null
 });

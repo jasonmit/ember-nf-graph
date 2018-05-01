@@ -80,7 +80,7 @@ export default Component.extend(RequireScaleSource, {
     @type Number
     @readonly
   */
-  x: computed('xMin', 'xScale', function(){
+  x: computed('xMin', 'xScale', function() {
     let xScale = this.get('xScale');
     let xMin = this.get('xMin');
     return xScale(xMin);
@@ -119,11 +119,11 @@ export default Component.extend(RequireScaleSource, {
 
       prevBottom = prevBottom || 0;
 
-      if(orient === 'bottom') {
+      if (orient === 'bottom') {
         return (prevY || graphHeight) - totalHeight;
       }
 
-      if(orient === 'top') {
+      if (orient === 'top') {
         return prevBottom;
       }
     }
@@ -148,7 +148,7 @@ export default Component.extend(RequireScaleSource, {
     @type Number
     @readonly
   */
-  bottom: computed('y', 'totalHeight', function(){
+  bottom: computed('y', 'totalHeight', function() {
     let y = this.get('y');
     let totalHeight = this.get('totalHeight');
     return y + totalHeight;
@@ -160,7 +160,7 @@ export default Component.extend(RequireScaleSource, {
     @type String
     @readonly
   */
-  transform: computed('y', function(){
+  transform: computed('y', function() {
     let y = this.get('y') || 0;
     return `translate(0 ${y})`;
   }),
@@ -171,7 +171,7 @@ export default Component.extend(RequireScaleSource, {
     @type String
     @readonly
   */
-  labelTransform: computed('x', function(){
+  labelTransform: computed('x', function() {
     let x = this.get('x') || 0;
     return `translate(${x} 0)`;
   }),

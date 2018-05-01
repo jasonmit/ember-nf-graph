@@ -6,7 +6,7 @@ import { computed, observer } from '@ember/object';
 import parsePropertyExpr from '../utils/parse-property-expression';
 import { nearestIndexTo } from '../utils/nf/array-helpers';
 
-let noop = function(){};
+let noop = function() {};
 
 /**
   This is mixed in to {{#crossLink components.nf-graph}}nf-graph{{/crossLink}} child components that need to register data
@@ -35,7 +35,7 @@ export default Mixin.create({
       let yPropFn = this.get('yPropFn');
       let xPropFn = this.get('xPropFn');
       let data = this.get('data');
-      if(isArray(data)) {
+      if (isArray(data)) {
         return data.map(function(d, i) {
           let item = [xPropFn(d), yPropFn(d)];
           item.data = d;
@@ -47,9 +47,12 @@ export default Mixin.create({
     }
   }),
 
-  _triggerHasData: on('init', observer('data.[]', function(){
-    scheduleOnce('afterRender', this, this._sendTriggerHasData);
-  })),
+  _triggerHasData: on(
+    'init',
+    observer('data.[]', function() {
+      scheduleOnce('afterRender', this, this._sendTriggerHasData);
+    })
+  ),
 
   _sendTriggerHasData() {
     this.trigger('hasData', this.get('mappedData'));
@@ -118,11 +121,17 @@ export default Mixin.create({
     return this._computeRenderedData();
   }),
 
-  _scheduleComputeRenderedData: observer('mappedData.[]', 'graph.xScaleType', 'graph.xMin', 'graph.xMax', function() {
-    schedule('afterRender', () => {
-      this.set('renderedData', this._computeRenderedData());
-    });
-  }),
+  _scheduleComputeRenderedData: observer(
+    'mappedData.[]',
+    'graph.xScaleType',
+    'graph.xMin',
+    'graph.xMax',
+    function() {
+      schedule('afterRender', () => {
+        this.set('renderedData', this._computeRenderedData());
+      });
+    }
+  ),
 
   _computeRenderedData() {
     let mappedData = this.get('mappedData');
@@ -131,22 +140,26 @@ export default Mixin.create({
     let xMin = graph.get('xMin');
     let xMax = graph.get('xMax');
 
-    if(!mappedData || mappedData.length === 0) {
+    if (!mappedData || mappedData.length === 0) {
       return [];
     }
 
-    if(xScaleType === 'ordinal') {
+    if (xScaleType === 'ordinal') {
       return mappedData;
     }
 
     return mappedData.filter(function(d, i) {
       let x = d[0];
-      let prev = mappedData[i-1];
-      let next = mappedData[i+1];
+      let prev = mappedData[i - 1];
+      let next = mappedData[i + 1];
       let prevX = prev ? prev[0] : null;
       let nextX = next ? next[0] : null;
 
-      return between(x, xMin, xMax) || between(prevX, xMin, xMax) || between(nextX, xMin, xMax);
+      return (
+        between(x, xMin, xMax) ||
+        between(prevX, xMin, xMax) ||
+        between(nextX, xMin, xMax)
+      );
     });
   },
 
@@ -159,23 +172,29 @@ export default Mixin.create({
   */
   firstVisibleData: computed('renderedData.[]', 'xMin', {
     get() {
-      let { renderedData, xPropFn, yPropFn, xMin } = this.getProperties('renderedData', 'xPropFn', 'yPropFn', 'xMin');
+      let { renderedData, xPropFn, yPropFn, xMin } = this.getProperties(
+        'renderedData',
+        'xPropFn',
+        'yPropFn',
+        'xMin'
+      );
 
       let first = renderedData[0];
-      if(first && xMin > first[0] && renderedData.length > 1) {
+      if (first && xMin > first[0] && renderedData.length > 1) {
         first = renderedData[1];
       }
 
-      return first ? {
-        x: xPropFn(first.data),
-        y: yPropFn(first.data),
-        data: first.data,
-        renderX: first[0],
-        renderY: first[1]
-      } : null;
+      return first
+        ? {
+            x: xPropFn(first.data),
+            y: yPropFn(first.data),
+            data: first.data,
+            renderX: first[0],
+            renderY: first[1]
+          }
+        : null;
     }
   }),
-
 
   /**
     The last element from {{#crossLink "mixins.graph-data-graphic/renderedData:property"}}{{/crossLink}}
@@ -186,27 +205,34 @@ export default Mixin.create({
   */
   lastVisibleData: computed('renderedData.[]', 'yPropFn', 'xPropFn', 'xMax', {
     get() {
-      let { renderedData, xPropFn, yPropFn, xMax } = this.getProperties('renderedData', 'xPropFn', 'yPropFn', 'xMax');
+      let { renderedData, xPropFn, yPropFn, xMax } = this.getProperties(
+        'renderedData',
+        'xPropFn',
+        'yPropFn',
+        'xMax'
+      );
       let last = renderedData[renderedData.length - 1];
 
-      if(last && xMax < last[0] && renderedData.length > 1) {
+      if (last && xMax < last[0] && renderedData.length > 1) {
         last = renderedData[renderedData.length - 2];
       }
 
-      return last ? {
-        x: xPropFn(last.data),
-        y: yPropFn(last.data),
-        data: last.data,
-        renderX: last[0],
-        renderY: last[1]
-      }: null;
+      return last
+        ? {
+            x: xPropFn(last.data),
+            y: yPropFn(last.data),
+            data: last.data,
+            renderX: last[0],
+            renderY: last[1]
+          }
+        : null;
     }
   }),
 
   _getRenderedDataNearXRange: function(rangeX) {
     let xScale = this.get('xScale');
     let isLinear = xScale && xScale.invert;
-    if(isLinear) {
+    if (isLinear) {
       return this.getDataNearX(xScale.invert(rangeX));
     } else {
       //ordinal
@@ -221,7 +247,7 @@ export default Mixin.create({
   getDataNearXRange(rangeX) {
     let rendered = this._getRenderedDataNearXRange(rangeX);
 
-    if(!rendered) {
+    if (!rendered) {
       return null;
     }
 
@@ -248,14 +274,14 @@ export default Mixin.create({
 
   getDataNearX: function(x) {
     x = +x;
-    if(x === x) {
+    if (x === x) {
       let renderedData = this.get('renderedData');
-      let index = nearestIndexTo(renderedData, x, function(d){
+      let index = nearestIndexTo(renderedData, x, function(d) {
         return d ? d[0] : null;
       });
       return index !== -1 ? renderedData[index] : null;
     }
-  },
+  }
 });
 
 function between(x, a, b) {

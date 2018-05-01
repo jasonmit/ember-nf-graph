@@ -68,7 +68,7 @@ export default Component.extend(RequireScaleSource, {
     @property x0
     @type Number
   */
-  x0: computed('xMin', 'xScale', function(){
+  x0: computed('xMin', 'xScale', function() {
     return normalizeScale(this.get('xScale'), this.get('xMin'));
   }),
 
@@ -77,7 +77,7 @@ export default Component.extend(RequireScaleSource, {
     @property x1
     @type Number
   */
-  x1: computed('xMax', 'xScale', function(){
+  x1: computed('xMax', 'xScale', function() {
     return normalizeScale(this.get('xScale'), this.get('xMax'));
   }),
 
@@ -86,7 +86,7 @@ export default Component.extend(RequireScaleSource, {
     @property y0
     @type Number
   */
-  y0: computed('yMin', 'yScale', function(){
+  y0: computed('yMin', 'yScale', function() {
     return normalizeScale(this.get('yScale'), this.get('yMin'));
   }),
 
@@ -95,7 +95,7 @@ export default Component.extend(RequireScaleSource, {
     @property y1
     @type Number
   */
-  y1: computed('yMax', 'yScale', function(){
+  y1: computed('yMax', 'yScale', function() {
     return normalizeScale(this.get('yScale'), this.get('yMax'));
   }),
 
@@ -104,7 +104,7 @@ export default Component.extend(RequireScaleSource, {
     @property rectPath
     @type String
   */
-  rectPath: computed('x0', 'x1', 'y0', 'y1', function(){
+  rectPath: computed('x0', 'x1', 'y0', 'y1', function() {
     let x0 = this.get('x0');
     let x1 = this.get('x1');
     let y0 = this.get('y0');
@@ -116,16 +116,18 @@ export default Component.extend(RequireScaleSource, {
     Updates the position of the box with a transition
     @method doUpdatePosition
   */
-  doUpdatePosition: function(){
+  doUpdatePosition: function() {
     let boxRect = this.get('boxRectElement');
     let rectPath = this.get('rectPath');
     let duration = this.get('duration');
 
-    boxRect.transition().duration(duration)
+    boxRect
+      .transition()
+      .duration(duration)
       .attr('d', rectPath);
   },
 
-  doUpdatePositionStatic: function(){
+  doUpdatePositionStatic: function() {
     let boxRect = this.get('boxRectElement');
     let rectPath = this.get('rectPath');
 
@@ -137,26 +139,30 @@ export default Component.extend(RequireScaleSource, {
     @method updatePosition
     @private
   */
-  updatePosition: observer('xMin', 'xMax', 'yMin', 'yMax', function(){
+  updatePosition: observer('xMin', 'xMax', 'yMin', 'yMax', function() {
     once(this, this.doUpdatePosition);
   }),
 
-  staticPositionChange: on('didInsertElement', observer('xScale', 'yScale', function(){
-    once(this, this.doUpdatePositionStatic);
-  })),
+  staticPositionChange: on(
+    'didInsertElement',
+    observer('xScale', 'yScale', function() {
+      once(this, this.doUpdatePositionStatic);
+    })
+  ),
 
   /**
     Sets up the required d3 elements after component
     is inserted into the DOM
     @method didInsertElement
   */
-  didInsertElement: function(){
+  didInsertElement: function() {
     let element = this.get('element');
     let g = d3.select(element);
-    let boxRect = g.append('path')
+    let boxRect = g
+      .append('path')
       .attr('class', 'nf-selection-box-rect')
       .attr('d', this.get('rectPath'));
 
     this.set('boxRectElement', boxRect);
-  },
+  }
 });

@@ -126,7 +126,7 @@ export default Component.extend(RequireScaleSource, {
     @type String
     @readonly
   */
-  orientClass: computed('orient', function(){
+  orientClass: computed('orient', function() {
     return 'orient-' + this.get('orient');
   }),
 
@@ -136,7 +136,7 @@ export default Component.extend(RequireScaleSource, {
     @type String
     @readonly
   */
-  transform: computed('x', 'y', function(){
+  transform: computed('x', 'y', function() {
     let x = this.get('x') || 0;
     let y = this.get('y') || 0;
     return `translate(${x} ${y})`;
@@ -152,7 +152,7 @@ export default Component.extend(RequireScaleSource, {
     'orient',
     'graph.{paddingTop,paddingBottom,height}',
     'height',
-    function(){
+    function() {
       let orient = this.get('orient');
       let graphHeight = this.get('graph.height');
       let height = this.get('height');
@@ -160,7 +160,7 @@ export default Component.extend(RequireScaleSource, {
       let paddingTop = this.get('graph.paddingTop');
       let y;
 
-      if(orient === 'bottom') {
+      if (orient === 'bottom') {
         y = graphHeight - paddingBottom - height;
       } else {
         y = paddingTop;
@@ -176,7 +176,7 @@ export default Component.extend(RequireScaleSource, {
     @type Number
     @readonly
   */
-  x: computed('graph.graphX', function(){
+  x: computed('graph.graphX', function() {
     return this.get('graph.graphX') || 0;
   }),
 
@@ -216,23 +216,28 @@ export default Component.extend(RequireScaleSource, {
   */
   tickFactory: null,
 
-  tickData: computed('xScale', 'graph.xScaleType', 'uniqueXData', 'tickCount', 'tickFactory', function(){
-    let tickFactory = this.get('tickFactory');
-    let scale = this.get('xScale');
-    let uniqueData = this.get('uniqueXData');
-    let tickCount = this.get('tickCount');
-    let scaleType = this.get('graph.xScaleType');
+  tickData: computed(
+    'xScale',
+    'graph.xScaleType',
+    'uniqueXData',
+    'tickCount',
+    'tickFactory',
+    function() {
+      let tickFactory = this.get('tickFactory');
+      let scale = this.get('xScale');
+      let uniqueData = this.get('uniqueXData');
+      let tickCount = this.get('tickCount');
+      let scaleType = this.get('graph.xScaleType');
 
-    if(tickFactory) {
-      return tickFactory(scale, tickCount, uniqueData, scaleType);
+      if (tickFactory) {
+        return tickFactory(scale, tickCount, uniqueData, scaleType);
+      } else if (scaleType === 'ordinal') {
+        return uniqueData;
+      } else {
+        return scale.ticks(tickCount);
+      }
     }
-    else if(scaleType === 'ordinal') {
-      return uniqueData;
-    }
-    else {
-      return scale.ticks(tickCount);
-    }
-  }),
+  ),
 
   /**
     A unique set of all x data on the graph
@@ -257,7 +262,7 @@ export default Component.extend(RequireScaleSource, {
     'tickFilter',
     'tickData',
     'graph.xScaleType',
-    function(){
+    function() {
       let xScale = this.get('xScale');
       let xScaleType = this.get('graph.xScaleType');
       let tickPadding = this.get('tickPadding');
@@ -268,8 +273,8 @@ export default Component.extend(RequireScaleSource, {
       let ticks = this.get('tickData');
       let y1 = orient === 'top' ? height : 0;
       let y2 = y1 + tickLength;
-      let labely = orient === 'top' ? (y1 - tickPadding) : (y1 + tickPadding);
-      let halfBandWidth = (xScaleType === 'ordinal') ? xScale.rangeBand() / 2 : 0;
+      let labely = orient === 'top' ? y1 - tickPadding : y1 + tickPadding;
+      let halfBandWidth = xScaleType === 'ordinal' ? xScale.rangeBand() / 2 : 0;
       let result = ticks.map(function(tick) {
         return {
           value: tick,
@@ -280,7 +285,7 @@ export default Component.extend(RequireScaleSource, {
         };
       });
 
-      if(tickFilter) {
+      if (tickFilter) {
         result = result.filter(tickFilter);
       }
 
@@ -294,8 +299,7 @@ export default Component.extend(RequireScaleSource, {
     @type Number
     @readonly
   */
-  axisLineY: computed('orient', 'height', function(){
+  axisLineY: computed('orient', 'height', function() {
     return this.get('orient') === 'top' ? this.get('height') : 0;
   })
-
 });

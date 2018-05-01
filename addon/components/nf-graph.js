@@ -16,7 +16,7 @@ const Observable = Rx.Observable;
 
 const computedBool = bool;
 
-let minProperty = function(axis, defaultTickCount){
+let minProperty = function(axis, defaultTickCount) {
   let _DataExtent_ = axis + 'DataExtent';
   let _MinMode_ = axis + 'MinMode';
   let _Axis_tickCount_ = axis + 'Axis.tickCount';
@@ -42,24 +42,23 @@ let minProperty = function(axis, defaultTickCount){
           this.trigger(_autoScaleEvent_);
         };
 
-        if(mode === 'auto') {
+        if (mode === 'auto') {
           change(this.get(_DataExtent_)[0] || 0);
-        }
-
-        else if(mode === 'push') {
+        } else if (mode === 'push') {
           ext = this.get(_DataExtent_)[0];
-          if(!isNaN(ext) && ext < this[__Min_]) {
+          if (!isNaN(ext) && ext < this[__Min_]) {
             change(ext);
           }
-        }
-
-        else if(mode === 'push-tick') {
+        } else if (mode === 'push-tick') {
           let extent = this.get(_DataExtent_);
           ext = extent[0];
 
-          if(!isNaN(ext) && ext < this[__Min_]) {
+          if (!isNaN(ext) && ext < this[__Min_]) {
             let tickCount = this.get(_Axis_tickCount_) || defaultTickCount;
-            let newDomain = this.get(_ScaleFactory_)().domain(extent).nice(tickCount).domain();
+            let newDomain = this.get(_ScaleFactory_)()
+              .domain(extent)
+              .nice(tickCount)
+              .domain();
             change(newDomain[0]);
           }
         }
@@ -102,24 +101,23 @@ let maxProperty = function(axis, defaultTickCount) {
           this.trigger(_autoScaleEvent_);
         };
 
-        if(mode === 'auto') {
+        if (mode === 'auto') {
           change(this.get(_DataExtent_)[1] || 1);
-        }
-
-        else if(mode === 'push') {
+        } else if (mode === 'push') {
           ext = this.get(_DataExtent_)[1];
-          if(!isNaN(ext) && this[__Max_] < ext) {
+          if (!isNaN(ext) && this[__Max_] < ext) {
             change(ext);
           }
-        }
-
-        else if(mode === 'push-tick') {
+        } else if (mode === 'push-tick') {
           let extent = this.get(_DataExtent_);
           ext = extent[1];
 
-          if(!isNaN(ext) && this[__Max_] < ext) {
+          if (!isNaN(ext) && this[__Max_] < ext) {
             let tickCount = this.get(_Axis_tickCount_) || defaultTickCount;
-            let newDomain = this.get(_ScaleFactory_)().domain(extent).nice(tickCount).domain();
+            let newDomain = this.get(_ScaleFactory_)()
+              .domain(extent)
+              .nice(tickCount)
+              .domain();
             change(newDomain[1]);
           }
         }
@@ -426,7 +424,6 @@ export default Component.extend({
   */
   yMax: maxProperty('y', 5),
 
-
   /**
     Sets the behavior of `xMin` for the graph.
 
@@ -511,20 +508,23 @@ export default Component.extend({
       yMax: Number.MIN_VALUE
     }
   */
-  dataExtents: computed('graphics.@each.data', function(){
+  dataExtents: computed('graphics.@each.data', function() {
     let graphics = this.get('graphics');
-    return graphics.reduce((c, x) => c.concat(x.get('mappedData')), []).reduce((extents, [x, y]) => {
-      extents.xMin = extents.xMin < x ? extents.xMin : x;
-      extents.xMax = extents.xMax > x ? extents.xMax : x;
-      extents.yMin = extents.yMin < y ? extents.yMin : y;
-      extents.yMax = extents.yMax > y ? extents.yMax : y;
-      return extents;
-    }, {
-      xMin: Number.MAX_VALUE,
-      xMax: Number.MIN_VALUE,
-      yMin: Number.MAX_VALUE,
-      yMax: Number.MIN_VALUE
-    });
+    return graphics.reduce((c, x) => c.concat(x.get('mappedData')), []).reduce(
+      (extents, [x, y]) => {
+        extents.xMin = extents.xMin < x ? extents.xMin : x;
+        extents.xMax = extents.xMax > x ? extents.xMax : x;
+        extents.yMin = extents.yMin < y ? extents.yMin : y;
+        extents.yMax = extents.yMax > y ? extents.yMax : y;
+        return extents;
+      },
+      {
+        xMin: Number.MAX_VALUE,
+        xMax: Number.MIN_VALUE,
+        yMin: Number.MAX_VALUE,
+        yMax: Number.MIN_VALUE
+      }
+    );
   }),
 
   /**
@@ -597,7 +597,7 @@ export default Component.extend({
     @type Array
     @readonly
   */
-  xDataExtent: computed('dataExtents', function(){
+  xDataExtent: computed('dataExtents', function() {
     let { xMin, xMax } = this.get('dataExtents');
     return [xMin, xMax];
   }),
@@ -608,7 +608,7 @@ export default Component.extend({
     @type Array
     @readonly
   */
-  yDataExtent: computed('dataExtents', function(){
+  yDataExtent: computed('dataExtents', function() {
     let { yMin, yMax } = this.get('dataExtents');
     return [yMin, yMax];
   }),
@@ -618,11 +618,11 @@ export default Component.extend({
     @type Array
     @readonly
   */
-  xUniqueData: computed('graphics.@each.mappedData', function(){
+  xUniqueData: computed('graphics.@each.mappedData', function() {
     let graphics = this.get('graphics');
     let uniq = graphics.reduce((uniq, graphic) => {
       return graphic.get('mappedData').reduce((uniq, d) => {
-        if(!uniq.some(x => x === d[0])) {
+        if (!uniq.some(x => x === d[0])) {
           uniq.push(d[0]);
         }
         return uniq;
@@ -631,17 +631,16 @@ export default Component.extend({
     return A(uniq);
   }),
 
-
   /**
     @property yUniqueData
     @type Array
     @readonly
   */
-  yUniqueData: computed('graphics.@each.mappedData', function(){
+  yUniqueData: computed('graphics.@each.mappedData', function() {
     let graphics = this.get('graphics');
     let uniq = graphics.reduce((uniq, graphic) => {
       return graphic.get('mappedData').reduce((uniq, d) => {
-        if(!uniq.some(y => y === d[1])) {
+        if (!uniq.some(y => y === d[1])) {
           uniq.push(d[1]);
         }
         return uniq;
@@ -657,7 +656,7 @@ export default Component.extend({
     @readonly
     @private
   */
-  contentClipPathId: computed('elementId', function(){
+  contentClipPathId: computed('elementId', function() {
     return this.get('elementId') + '-content-mask';
   }),
 
@@ -668,7 +667,7 @@ export default Component.extend({
     @type Array
     @readonly
    */
-  graphics: computed(function(){
+  graphics: computed(function() {
     return A();
   }),
 
@@ -734,12 +733,10 @@ export default Component.extend({
 
     type = typeof type === 'string' ? type.toLowerCase() : '';
 
-    if(type === 'linear') {
+    if (type === 'linear') {
       return d3.scale.linear;
-    }
-
-    else if(type === 'ordinal') {
-      return function(){
+    } else if (type === 'ordinal') {
+      return function() {
         let scale = d3.scale.ordinal();
         // ordinal scales don't have an invert function, so we need to add one
         scale.invert = function(rv) {
@@ -750,19 +747,13 @@ export default Component.extend({
         };
         return scale;
       };
-    }
-
-    else if(type === 'power' || type === 'pow') {
-      return function(){
+    } else if (type === 'power' || type === 'pow') {
+      return function() {
         return d3.scale.pow().exponent(powExp);
       };
-    }
-
-    else if(type === 'log') {
+    } else if (type === 'log') {
       return d3.scale.log;
-    }
-
-    else {
+    } else {
       warn('unknown scale type: ' + type);
       return d3.scale.linear;
     }
@@ -825,12 +816,12 @@ export default Component.extend({
     let logMin = this.get(`${axis}LogMin`);
     let domain = null;
 
-    if(scaleType === 'ordinal') {
+    if (scaleType === 'ordinal') {
       domain = data;
     } else {
       let extent = [min, max];
 
-      if(scaleType === 'log') {
+      if (scaleType === 'log') {
         if (extent[0] <= 0) {
           extent[0] = logMin;
         }
@@ -911,10 +902,15 @@ export default Component.extend({
 
     let scale = scaleFactory();
 
-    if(scaleType === 'ordinal') {
-      scale = scale.domain(domain).rangeBands(range, ordinalPadding, ordinalOuterPadding);
+    if (scaleType === 'ordinal') {
+      scale = scale
+        .domain(domain)
+        .rangeBands(range, ordinalPadding, ordinalOuterPadding);
     } else {
-      scale = scale.domain(domain).range(range).clamp(true);
+      scale = scale
+        .domain(domain)
+        .range(range)
+        .clamp(true);
     }
 
     return scale;
@@ -925,7 +921,7 @@ export default Component.extend({
     @method registerGraphic
     @param graphic {Ember.Component} The component object to register
    */
-  registerGraphic: function (graphic) {
+  registerGraphic: function(graphic) {
     schedule('afterRender', () => {
       let graphics = this.get('graphics');
       graphic.on('hasData', this, this.updateExtents);
@@ -958,7 +954,7 @@ export default Component.extend({
     @type Array
     @readonly
    */
-  yRange: computed('graphHeight', function(){
+  yRange: computed('graphHeight', function() {
     return [this.get('graphHeight'), 0];
   }),
 
@@ -969,7 +965,7 @@ export default Component.extend({
     @type Array
     @readonly
    */
-  xRange: computed('graphWidth', function(){
+  xRange: computed('graphWidth', function() {
     return [0, this.get('graphWidth')];
   }),
 
@@ -993,7 +989,7 @@ export default Component.extend({
     let paddingLeft = this.get('paddingLeft');
     let yAxisWidth = this.get('yAxis.width') || 0;
     let yAxisOrient = this.get('yAxis.orient');
-    if(yAxisOrient === 'right') {
+    if (yAxisOrient === 'right') {
       return paddingLeft;
     }
     return paddingLeft + yAxisWidth;
@@ -1005,10 +1001,10 @@ export default Component.extend({
     @type Number
     @readonly
    */
-  graphY: computed('paddingTop', 'xAxis.{orient,height}', function(){
+  graphY: computed('paddingTop', 'xAxis.{orient,height}', function() {
     let paddingTop = this.get('paddingTop');
     let xAxisOrient = this.get('xAxis.orient');
-    if(xAxisOrient === 'top') {
+    if (xAxisOrient === 'top') {
       let xAxisHeight = this.get('xAxis.height') || 0;
       return xAxisHeight + paddingTop;
     }
@@ -1021,13 +1017,19 @@ export default Component.extend({
     @type Number
     @readonly
    */
-  graphWidth: computed('width', 'paddingRight', 'paddingLeft', 'yAxis.width', function() {
-    let paddingRight = this.get('paddingRight') || 0;
-    let paddingLeft = this.get('paddingLeft') || 0;
-    let yAxisWidth = this.get('yAxis.width') || 0;
-    let width = this.get('width') || 0;
-    return Math.max(0, width - paddingRight - paddingLeft - yAxisWidth);
-  }),
+  graphWidth: computed(
+    'width',
+    'paddingRight',
+    'paddingLeft',
+    'yAxis.width',
+    function() {
+      let paddingRight = this.get('paddingRight') || 0;
+      let paddingLeft = this.get('paddingLeft') || 0;
+      let yAxisWidth = this.get('yAxis.width') || 0;
+      let width = this.get('width') || 0;
+      return Math.max(0, width - paddingRight - paddingLeft - yAxisWidth);
+    }
+  ),
 
   /**
     The height, in pixels, of the graph content
@@ -1035,13 +1037,19 @@ export default Component.extend({
     @type Number
     @readonly
    */
-  graphHeight: computed('height', 'paddingTop', 'paddingBottom', 'xAxis.height', function(){
-    let paddingTop = this.get('paddingTop') || 0;
-    let paddingBottom = this.get('paddingBottom') || 0;
-    let xAxisHeight = this.get('xAxis.height') || 0;
-    let height = this.get('height') || 0;
-    return Math.max(0, height - paddingTop - paddingBottom - xAxisHeight);
-  }),
+  graphHeight: computed(
+    'height',
+    'paddingTop',
+    'paddingBottom',
+    'xAxis.height',
+    function() {
+      let paddingTop = this.get('paddingTop') || 0;
+      let paddingBottom = this.get('paddingBottom') || 0;
+      let xAxisHeight = this.get('xAxis.height') || 0;
+      let height = this.get('height') || 0;
+      return Math.max(0, height - paddingTop - paddingBottom - xAxisHeight);
+    }
+  ),
 
   /**
     An SVG transform to position the graph content
@@ -1049,7 +1057,7 @@ export default Component.extend({
     @type String
     @readonly
    */
-  graphTransform: computed('graphX', 'graphY', function(){
+  graphTransform: computed('graphX', 'graphY', function() {
     let graphX = this.get('graphX');
     let graphY = this.get('graphY');
     return `translate(${graphX} ${graphY})`;
@@ -1060,7 +1068,7 @@ export default Component.extend({
     @method _notifyHasRendered
     @private
   */
-  _notifyHasRendered: on('willInsertElement', function () {
+  _notifyHasRendered: on('willInsertElement', function() {
     schedule('afterRender', () => {
       this.set('hasRendered', true);
     });
@@ -1073,17 +1081,20 @@ export default Component.extend({
     @param e {Object} the DOM mouse event
     @return {Array} an array of `[xMouseCoord, yMouseCoord]`
    */
-  mousePoint: function (container, e) {
+  mousePoint: function(container, e) {
     let svg = container.ownerSVGElement || container;
     if (svg.createSVGPoint) {
       let point = svg.createSVGPoint();
       point.x = e.clientX;
       point.y = e.clientY;
       point = point.matrixTransform(container.getScreenCTM().inverse());
-      return [ point.x, point.y ];
+      return [point.x, point.y];
     }
     let rect = container.getBoundingClientRect();
-    return [ e.clientX - rect.left - container.clientLeft, e.clientY - rect.top - container.clientTop ];
+    return [
+      e.clientX - rect.left - container.clientLeft,
+      e.clientY - rect.top - container.clientTop
+    ];
   },
 
   /**
@@ -1093,14 +1104,14 @@ export default Component.extend({
     @param graphic {Ember.Component} the graph component to select within the graph.
   */
   selectGraphic: function(graphic) {
-    if(!graphic.get('selected')) {
+    if (!graphic.get('selected')) {
       graphic.set('selected', true);
     }
-    if(this.selectMultiple) {
+    if (this.selectMultiple) {
       this.get('selected').pushObject(graphic);
     } else {
       let current = this.get('selected');
-      if(current && current !== graphic) {
+      if (current && current !== graphic) {
         current.set('selected', false);
       }
       this.set('selected', graphic);
@@ -1114,11 +1125,11 @@ export default Component.extend({
   */
   deselectGraphic: function(graphic) {
     graphic.set('selected', false);
-    if(this.selectMultiple) {
+    if (this.selectMultiple) {
       this.get('selected').removeObject(graphic);
     } else {
       let current = this.get('selected');
-      if(current && current === graphic) {
+      if (current && current === graphic) {
         this.set('selected', null);
       }
     }
@@ -1156,7 +1167,7 @@ export default Component.extend({
   */
   brushEndAction: null,
 
-  _setupBrushAction: on('didInsertElement', function(){
+  _setupBrushAction: on('didInsertElement', function() {
     let content = this.$('.nf-graph-content');
 
     let mouseMoves = Observable.fromEvent(content, 'mousemove');
@@ -1164,33 +1175,42 @@ export default Component.extend({
     let mouseUps = Observable.fromEvent($(document), 'mouseup');
     let mouseLeaves = Observable.fromEvent(content, 'mouseleave');
 
-    this._brushDisposable = Observable.merge(mouseDowns, mouseMoves, mouseLeaves).
+    this._brushDisposable = Observable.merge(
+      mouseDowns,
+      mouseMoves,
+      mouseLeaves
+    )
       // get a streams of mouse events that start on mouse down and end on mouse up
-      window(mouseDowns, function() { return mouseUps; })
+      .window(mouseDowns, function() {
+        return mouseUps;
+      })
       // filter out all of them if there are no brush actions registered
       // map the mouse event streams into brush event streams
-      .map(x => this._toBrushEventStreams(x)).
+      .map(x => this._toBrushEventStreams(x))
       // flatten to a stream of action names and event objects
-      flatMap(x => this._toComponentEventStream(x)).
+      .flatMap(x => this._toComponentEventStream(x))
       // HACK: this is fairly cosmetic, so skip errors.
-      retry().
+      .retry()
       // subscribe and send the brush actions via Ember
-      subscribe(x => {
+      .subscribe(x => {
         run(this, () => this._triggerComponentEvent(x));
       });
   }),
 
   _toBrushEventStreams: function(mouseEvents) {
     // get the starting mouse event
-    return mouseEvents.take(1).
-      // calculate it's mouse point and info
-      map( this._getStartInfo ).
-      // combine the start with the each subsequent mouse event
-      combineLatest(mouseEvents.skip(1), toArray).
-      // filter out everything until the brushThreshold is crossed
-      filter(x => this._byBrushThreshold(x)).
-      // create the brush event object
-      map(x => this._toBrushEvent(x));
+    return (
+      mouseEvents
+        .take(1)
+        // calculate it's mouse point and info
+        .map(this._getStartInfo)
+        // combine the start with the each subsequent mouse event
+        .combineLatest(mouseEvents.skip(1), toArray)
+        // filter out everything until the brushThreshold is crossed
+        .filter(x => this._byBrushThreshold(x))
+        // create the brush event object
+        .map(x => this._toBrushEvent(x))
+    );
   },
 
   _triggerComponentEvent: function(d) {
@@ -1201,16 +1221,18 @@ export default Component.extend({
     return Observable.merge(
       events.take(1).map(function(e) {
         return ['didBrushStart', e];
-      }), events.map(function(e) {
+      }),
+      events.map(function(e) {
         return ['didBrush', e];
-      }), events.last().map(function(e) {
+      }),
+      events.last().map(function(e) {
         return ['didBrushEnd', e];
       })
     );
   },
 
   didBrush: function(e) {
-    if(this.get('brushAction')) {
+    if (this.get('brushAction')) {
       this.sendAction('brushAction', e);
     }
   },
@@ -1219,7 +1241,7 @@ export default Component.extend({
     document.body.style.setProperty('-webkit-user-select', 'none');
     document.body.style.setProperty('-moz-user-select', 'none');
     document.body.style.setProperty('user-select', 'none');
-    if(this.get('brushStartAction')) {
+    if (this.get('brushStartAction')) {
       this.sendAction('brushStartAction', e);
     }
   },
@@ -1228,14 +1250,14 @@ export default Component.extend({
     document.body.style.removeProperty('-webkit-user-select');
     document.body.style.removeProperty('-moz-user-select');
     document.body.style.removeProperty('user-select');
-    if(this.get('brushEndAction')) {
+    if (this.get('brushEndAction')) {
       this.sendAction('brushEndAction', e);
     }
   },
 
   _toBrushEvent: function(d) {
     let start = d[0];
-    let currentEvent =  d[1];
+    let currentEvent = d[1];
     let currentPoint = getMousePoint(currentEvent.currentTarget, d[1]);
 
     let startPosition = GraphPosition.create({
@@ -1255,7 +1277,7 @@ export default Component.extend({
     let left = startPosition;
     let right = currentPosition;
 
-    if(start.originalEvent.clientX > currentEvent.clientX) {
+    if (start.originalEvent.clientX > currentEvent.clientX) {
       left = currentPosition;
       right = startPosition;
     }
@@ -1271,7 +1293,10 @@ export default Component.extend({
   _byBrushThreshold: function(d) {
     let startEvent = d[0].originalEvent;
     let currentEvent = d[1];
-    return Math.abs(currentEvent.clientX - startEvent.clientX) > this.get('brushThreshold');
+    return (
+      Math.abs(currentEvent.clientX - startEvent.clientX) >
+      this.get('brushThreshold')
+    );
   },
 
   _getStartInfo: function(e) {
@@ -1281,11 +1306,11 @@ export default Component.extend({
     };
   },
 
-  willDestroyElement: function(){
+  willDestroyElement: function() {
     this._super(...arguments);
 
-    if(this._brushDisposable) {
+    if (this._brushDisposable) {
       this._brushDisposable.dispose();
     }
-  },
+  }
 });

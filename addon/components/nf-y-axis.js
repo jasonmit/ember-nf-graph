@@ -126,14 +126,13 @@ export default Component.extend(RequireScaleSource, {
   */
   isOrientRight: equal('orient', 'right'),
 
-
   /**
     The SVG transform for positioning the component.
     @property transform
     @type String
     @readonly
   */
-  transform: computed('x', 'y', function(){
+  transform: computed('x', 'y', function() {
     let x = this.get('x') || 0;
     let y = this.get('y') || 0;
     return `translate(${x} ${y})`;
@@ -149,10 +148,14 @@ export default Component.extend(RequireScaleSource, {
     'orient',
     'width',
     'graph.{paddingLeft,paddingRight,width}',
-    function(){
+    function() {
       let orient = this.get('orient');
-      if(orient !== 'left') {
-        return this.get('graph.width') - this.get('width') - this.get('graph.paddingRight');
+      if (orient !== 'left') {
+        return (
+          this.get('graph.width') -
+          this.get('width') -
+          this.get('graph.paddingRight')
+        );
       }
       return this.get('graph.paddingLeft');
     }
@@ -202,30 +205,35 @@ export default Component.extend(RequireScaleSource, {
   */
   tickFactory: null,
 
-  tickData: computed('graph.yScaleType', 'uniqueYData', 'yScale', 'tickCount', 'tickFactory', function(){
-    let tickFactory = this.get('tickFactory');
-    let scale = this.get('yScale');
-    let uniqueData = this.get('uniqueYData');
-    let scaleType = this.get('graph.yScaleType');
-    let tickCount = this.get('tickCount');
+  tickData: computed(
+    'graph.yScaleType',
+    'uniqueYData',
+    'yScale',
+    'tickCount',
+    'tickFactory',
+    function() {
+      let tickFactory = this.get('tickFactory');
+      let scale = this.get('yScale');
+      let uniqueData = this.get('uniqueYData');
+      let scaleType = this.get('graph.yScaleType');
+      let tickCount = this.get('tickCount');
 
-    if(tickFactory) {
-      return tickFactory(scale, tickCount, uniqueData, scaleType);
-    }
-    else if(scaleType === 'ordinal') {
-      return uniqueData;
-    }
-    else {
-      let ticks = scale.ticks(tickCount);
-      if (scaleType === 'log') {
-        let step = Math.round(ticks.length / tickCount);
-        ticks = ticks.filter(function (tick, i) {
-          return i % step === 0;
-        });
+      if (tickFactory) {
+        return tickFactory(scale, tickCount, uniqueData, scaleType);
+      } else if (scaleType === 'ordinal') {
+        return uniqueData;
+      } else {
+        let ticks = scale.ticks(tickCount);
+        if (scaleType === 'log') {
+          let step = Math.round(ticks.length / tickCount);
+          ticks = ticks.filter(function(tick, i) {
+            return i % step === 0;
+          });
+        }
+        return ticks;
       }
-      return ticks;
     }
-  }),
+  ),
 
   /**
     All y data from the graph, filtered to unique values.
@@ -259,19 +267,21 @@ export default Component.extend(RequireScaleSource, {
       let ticks = this.get('tickData');
       let x1 = isOrientRight ? axisLineX + tickLength : axisLineX - tickLength;
       let x2 = axisLineX;
-      let labelx = isOrientRight ? (tickLength + tickPadding) : (axisLineX - tickLength - tickPadding);
+      let labelx = isOrientRight
+        ? tickLength + tickPadding
+        : axisLineX - tickLength - tickPadding;
 
-      let result = ticks.map(function (tick) {
+      let result = ticks.map(function(tick) {
         return {
           value: tick,
           y: yScale(tick),
           x1: x1,
           x2: x2,
-          labelx: labelx,
+          labelx: labelx
         };
       });
 
-      if(tickFilter) {
+      if (tickFilter) {
         result = result.filter(tickFilter);
       }
 
@@ -279,14 +289,13 @@ export default Component.extend(RequireScaleSource, {
     }
   ),
 
-
   /**
     The x position of the axis line.
     @property axisLineX
     @type Number
     @readonly
   */
-  axisLineX: computed('isOrientRight', 'width', function(){
+  axisLineX: computed('isOrientRight', 'width', function() {
     return this.get('isOrientRight') ? 0 : this.get('width');
-  }),
+  })
 });

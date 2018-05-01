@@ -47,11 +47,13 @@ export default Component.extend({
   */
   aggregate: computed({
     get() {
-      warn('nf-area-stack.aggregate must be set. Currently defaulting to `false` but will default to `true` in the future.');
-      return this._aggregate = false;
+      warn(
+        'nf-area-stack.aggregate must be set. Currently defaulting to `false` but will default to `true` in the future.'
+      );
+      return (this._aggregate = false);
     },
     set(key, value) {
-      return this._aggregate = value;
+      return (this._aggregate = value);
     }
   }),
 
@@ -61,7 +63,7 @@ export default Component.extend({
     @type Array
     @readonly
   */
-  areas: computed(function(){
+  areas: computed(function() {
     return A();
   }),
 
@@ -76,7 +78,7 @@ export default Component.extend({
     let prev = areas[areas.length - 1];
 
     schedule('afterRender', () => {
-      if(prev) {
+      if (prev) {
         prev.set('nextArea', area);
         area.set('prevArea', prev);
       }
@@ -96,15 +98,15 @@ export default Component.extend({
     let next = area.get('nextArea');
 
     schedule('afterRender', () => {
-      if(next) {
+      if (next) {
         next.set('prevArea', prev);
       }
 
-      if(prev) {
+      if (prev) {
         prev.set('nextArea', next);
       }
 
       this.get('areas').removeObject(area);
     });
-  },
+  }
 });

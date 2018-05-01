@@ -8,7 +8,7 @@ export default Component.extend({
 
   attributeBindings: ['transform'],
 
-  transform: computed('x', 'y', function(){
+  transform: computed('x', 'y', function() {
     let x = this.get('x');
     let y = this.get('y');
     return `translate(${x} ${y})`;

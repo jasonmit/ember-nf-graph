@@ -22,7 +22,7 @@ export default Component.extend(RequiresScaleSource, {
   groupOuterPadding: 0,
 
   // either b-arses or fat, stupid hobbitses
-  barses: computed(function(){
+  barses: computed(function() {
     return A();
   }),
 
@@ -36,7 +36,7 @@ export default Component.extend(RequiresScaleSource, {
   },
 
   unregisterBars: function(bars) {
-    if(bars) {
+    if (bars) {
       schedule('afterRender', () => {
         bars.set('group', undefined);
         bars.set('groupIndex', undefined);
@@ -45,12 +45,12 @@ export default Component.extend(RequiresScaleSource, {
     }
   },
 
-  groupWidth: computed('xScale', function(){
+  groupWidth: computed('xScale', function() {
     let xScale = this.get('xScale');
     return xScale && xScale.rangeBand ? xScale.rangeBand() : NaN;
   }),
 
-  barsDomain: computed('barses.[]', function(){
+  barsDomain: computed('barses.[]', function() {
     let len = this.get('barses.length') || 0;
     return d3.range(len);
   }),
@@ -60,12 +60,13 @@ export default Component.extend(RequiresScaleSource, {
     'barsDomain.[]',
     'groupPadding',
     'groupOuterPadding',
-    function(){
+    function() {
       let barsDomain = this.get('barsDomain');
       let groupWidth = this.get('groupWidth');
       let groupPadding = this.get('groupPadding');
       let groupOuterPadding = this.get('groupOuterPadding');
-      return d3.scale.ordinal()
+      return d3.scale
+        .ordinal()
         .domain(barsDomain)
         .rangeBands([0, groupWidth], groupPadding, groupOuterPadding);
     }
@@ -74,5 +75,5 @@ export default Component.extend(RequiresScaleSource, {
   barsWidth: function() {
     let scale = this.get('barScale');
     return scale && scale.rangeBand ? scale.rangeBand() : NaN;
-  },
+  }
 });

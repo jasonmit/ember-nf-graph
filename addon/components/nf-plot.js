@@ -72,7 +72,7 @@ export default Component.extend(RequireScaleSource, {
     @type Number
     @readonly
   */
-  rangeX: computed('x', 'xScale', function(){
+  rangeX: computed('x', 'xScale', function() {
     let xScale = this.get('xScale');
     let x = this.get('x');
     let hasX = this.get('hasX');
@@ -85,7 +85,7 @@ export default Component.extend(RequireScaleSource, {
     @type Number
     @readonly
   */
-  rangeY: computed('y', 'yScale', function(){
+  rangeY: computed('y', 'yScale', function() {
     let yScale = this.get('yScale');
     let y = this.get('y');
     let hasY = this.get('hasY');
@@ -98,7 +98,7 @@ export default Component.extend(RequireScaleSource, {
     @type String
     @readonly
   */
-  transform: computed('rangeX', 'rangeY', function(){
+  transform: computed('rangeX', 'rangeY', function() {
     let rangeX = this.get('rangeX');
     let rangeY = this.get('rangeY');
     return `translate(${rangeX} ${rangeY})`;
@@ -113,8 +113,8 @@ export default Component.extend(RequireScaleSource, {
       data: this.get('data'),
       source: this,
       graph: this.get('graph'),
-      originalEvent: e,
+      originalEvent: e
     });
     this.sendAction('action', context);
-  },
+  }
 });

@@ -93,13 +93,16 @@ export default Component.extend({
     this.set('isVisible', false);
   },
 
-  _setupBindings: on('didInsertElement', observer('graph.content', function() {
-    let content = this.get('graph.content');
-    if(content) {
-      schedule('afterRender', () => {
-        content.on('didHoverChange', this, this.didContentHoverChange);
-        content.on('didHoverEnd', this, this.didContentHoverEnd);
-      });
-    }
-  })),
+  _setupBindings: on(
+    'didInsertElement',
+    observer('graph.content', function() {
+      let content = this.get('graph.content');
+      if (content) {
+        schedule('afterRender', () => {
+          content.on('didHoverChange', this, this.didContentHoverChange);
+          content.on('didHoverEnd', this, this.didContentHoverEnd);
+        });
+      }
+    })
+  )
 });

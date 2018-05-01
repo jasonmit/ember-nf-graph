@@ -60,7 +60,7 @@ export default Component.extend(RequiresScaleSource, SelectableGraphic, {
       return this._width;
     },
     set(key, value) {
-      return this._width = +value;
+      return (this._width = +value);
     }
   }),
 
@@ -80,7 +80,7 @@ export default Component.extend(RequiresScaleSource, SelectableGraphic, {
       return this._height;
     },
     set(key, value) {
-      return this._height = +value;
+      return (this._height = +value);
     }
   }),
 
@@ -89,11 +89,11 @@ export default Component.extend(RequiresScaleSource, SelectableGraphic, {
     @property x1
     @type Number
   */
-  x1: computed('width', 'x', 'xScale', function(){
+  x1: computed('width', 'x', 'xScale', function() {
     let xScale = this.get('xScale');
     let w = this.get('width');
     let x = this.get('x');
-    if(xScale.rangeBands) {
+    if (xScale.rangeBands) {
       let domain = xScale.domain();
       let fromIndex = domain.indexOf(x);
       let toIndex = fromIndex + w;
@@ -109,11 +109,11 @@ export default Component.extend(RequiresScaleSource, SelectableGraphic, {
     @property y1
     @type Number
   */
-  y1: computed('height', 'y', 'yScale', function(){
+  y1: computed('height', 'y', 'yScale', function() {
     let yScale = this.get('yScale');
     let h = this.get('height');
     let y = this.get('y');
-    if(yScale.rangeBands) {
+    if (yScale.rangeBands) {
       let domain = yScale.domain();
       let fromIndex = domain.indexOf(y);
       let toIndex = fromIndex + h;
@@ -129,7 +129,7 @@ export default Component.extend(RequiresScaleSource, SelectableGraphic, {
     @property x0
     @type Number
   */
-  x0: computed('x', 'xScale', function(){
+  x0: computed('x', 'xScale', function() {
     return normalizeScale(this.get('xScale'), this.get('x'));
   }),
 
@@ -147,7 +147,7 @@ export default Component.extend(RequiresScaleSource, SelectableGraphic, {
     @property d
     @type String
   */
-  d: computed('x0', 'y0', 'x1', 'y1', function(){
+  d: computed('x0', 'y0', 'x1', 'y1', function() {
     let x0 = this.get('x0');
     let y0 = this.get('y0');
     let x1 = this.get('x1');
@@ -159,8 +159,8 @@ export default Component.extend(RequiresScaleSource, SelectableGraphic, {
     Click event handler. Toggles selected if selectable.
     @method click
   */
-  click: function(){
-    if(this.get('selectable')) {
+  click: function() {
+    if (this.get('selectable')) {
       this.toggleProperty('selected');
     }
   }

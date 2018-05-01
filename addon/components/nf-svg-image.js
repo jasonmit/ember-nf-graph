@@ -20,10 +20,16 @@ export default Component.extend(RequiresScaleSource, SelectableGraphic, {
 
   classNameBindings: [':nf-svg-image', 'selectable', 'selected'],
 
-  attributeBindings: ['svgX:x', 'svgY:y', 'svgWidth:width', 'svgHeight:height', 'src:href'],
+  attributeBindings: [
+    'svgX:x',
+    'svgY:y',
+    'svgWidth:width',
+    'svgHeight:height',
+    'src:href'
+  ],
 
-  click: function(){
-    if(this.get('selectable')) {
+  click: function() {
+    if (this.get('selectable')) {
       this.toggleProperty('selected');
     }
   },
@@ -64,7 +70,7 @@ export default Component.extend(RequiresScaleSource, SelectableGraphic, {
       return this._width;
     },
     set(key, value) {
-      return this._width = Math.max(0, +value) || 0;
+      return (this._width = Math.max(0, +value) || 0);
     }
   }),
 
@@ -93,25 +99,25 @@ export default Component.extend(RequiresScaleSource, SelectableGraphic, {
   */
   src: '',
 
-  x0: computed('x', 'xScale', function(){
+  x0: computed('x', 'xScale', function() {
     return normalizeScale(this.get('xScale'), this.get('x'));
   }),
 
-  y0: computed('y', 'yScale', function(){
+  y0: computed('y', 'yScale', function() {
     return normalizeScale(this.get('yScale'), this.get('y'));
   }),
 
-  x1: computed('xScale', 'width', 'x', function(){
+  x1: computed('xScale', 'width', 'x', function() {
     let scale = this.get('xScale');
-    if(scale.rangeBands) {
+    if (scale.rangeBands) {
       throw new Error('nf-image does not support ordinal scales');
     }
     return normalizeScale(scale, this.get('width') + this.get('x'));
   }),
 
-  y1: computed('yScale', 'height', 'y', function(){
+  y1: computed('yScale', 'height', 'y', function() {
     let scale = this.get('yScale');
-    if(scale.rangeBands) {
+    if (scale.rangeBands) {
       throw new Error('nf-image does not support ordinal scales');
     }
     return normalizeScale(scale, this.get('height') + this.get('y'));
@@ -122,7 +128,7 @@ export default Component.extend(RequiresScaleSource, SelectableGraphic, {
     @property svgX
     @type Number
   */
-  svgX: computed('x0', 'x1', function(){
+  svgX: computed('x0', 'x1', function() {
     return Math.min(this.get('x0'), this.get('x1'));
   }),
 
@@ -131,7 +137,7 @@ export default Component.extend(RequiresScaleSource, SelectableGraphic, {
     @property svgY
     @type Number
   */
-  svgY: computed('y0', 'y1', function(){
+  svgY: computed('y0', 'y1', function() {
     return Math.min(this.get('y0'), this.get('y1'));
   }),
 
@@ -140,7 +146,7 @@ export default Component.extend(RequiresScaleSource, SelectableGraphic, {
     @property svgWidth
     @type Number
   */
-  svgWidth: computed('x0', 'x1', function(){
+  svgWidth: computed('x0', 'x1', function() {
     return Math.abs(this.get('x0') - this.get('x1'));
   }),
 
@@ -149,7 +155,7 @@ export default Component.extend(RequiresScaleSource, SelectableGraphic, {
     @property svgHeight
     @type Number
   */
-  svgHeight: computed('y0', 'y1', function(){
+  svgHeight: computed('y0', 'y1', function() {
     return Math.abs(this.get('y0') - this.get('y1'));
-  }),
+  })
 });

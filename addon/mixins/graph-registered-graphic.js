@@ -22,7 +22,7 @@ export default Mixin.create({
     @method _unregisterGraphic
     @private
   */
-  _unregisterGraphic: on('willDestroyElement', function(){
+  _unregisterGraphic: on('willDestroyElement', function() {
     let graph = this.get('graph');
 
     if (graph) {

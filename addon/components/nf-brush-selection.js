@@ -38,11 +38,11 @@ export default Component.extend(RequiresScaleSource, {
     this.set('right', undefined);
   },
 
-  _wireToGraph: function(){
+  _wireToGraph: function() {
     let graph = this.get('graph');
     let auto = this.get('autoWireUp');
 
-    if(auto) {
+    if (auto) {
       graph.on('didBrushStart', this, this._autoBrushHandler);
       graph.on('didBrush', this, this._autoBrushHandler);
       graph.on('didBrushEnd', this, this._autoBrushEndHandler);
@@ -53,11 +53,14 @@ export default Component.extend(RequiresScaleSource, {
     }
   },
 
-  _autoWireUpChanged: on('didInsertElement', observer('autoWireUp', function(){
-    scheduleOnce('afterRender', this, this._wireToGraph);
-  })),
+  _autoWireUpChanged: on(
+    'didInsertElement',
+    observer('autoWireUp', function() {
+      scheduleOnce('afterRender', this, this._wireToGraph);
+    })
+  ),
 
-  _updateLeftText: function(){
+  _updateLeftText: function() {
     let root = d3.select(this.element);
     let g = root.select('.nf-brush-selection-left-display');
     let text = g.select('.nf-brush-selection-left-text');
@@ -65,7 +68,7 @@ export default Component.extend(RequiresScaleSource, {
 
     let display = this.get('leftDisplay');
 
-    if(!display) {
+    if (!display) {
       g.attr('hidden', true);
     } else {
       g.attr('hidden', null);
@@ -86,21 +89,19 @@ export default Component.extend(RequiresScaleSource, {
 
     g.attr('transform', `translate(${x} ${y})`);
 
-    text.attr('x', textPadding).
-      attr('y', textPadding);
+    text.attr('x', textPadding).attr('y', textPadding);
 
-    bg.attr('width', width).
-      attr('height', height);
+    bg.attr('width', width).attr('height', height);
   },
 
   _onLeftChange: on(
     'didInsertElement',
-    observer('left', 'graphHeight', 'textPadding', function(){
+    observer('left', 'graphHeight', 'textPadding', function() {
       scheduleOnce('afterRender', this, this._updateLeftText);
     })
   ),
 
-  _updateRightText: function(){
+  _updateRightText: function() {
     let root = d3.select(this.element);
     let g = root.select('.nf-brush-selection-right-display');
     let text = g.select('.nf-brush-selection-right-text');
@@ -108,7 +109,7 @@ export default Component.extend(RequiresScaleSource, {
 
     let display = this.get('rightDisplay');
 
-    if(!display) {
+    if (!display) {
       g.attr('hidden', true);
     } else {
       g.attr('hidden', null);
@@ -130,33 +131,31 @@ export default Component.extend(RequiresScaleSource, {
 
     g.attr('transform', `translate(${x} ${y})`);
 
-    text.attr('x', textPadding).
-      attr('y', textPadding);
+    text.attr('x', textPadding).attr('y', textPadding);
 
-    bg.attr('width', width).
-      attr('height', height);
+    bg.attr('width', width).attr('height', height);
   },
 
   _onRightChange: on(
     'didInsertElement',
-    observer('right', 'graphHeight', 'graphWidth', 'textPadding', function(){
+    observer('right', 'graphHeight', 'graphWidth', 'textPadding', function() {
       scheduleOnce('afterRender', this, this._updateRightText);
     })
   ),
 
-  leftDisplay: computed('left', 'formatter', function(){
+  leftDisplay: computed('left', 'formatter', function() {
     let formatter = this.get('formatter');
     let left = this.get('left');
     return formatter ? formatter(left) : left;
   }),
 
-  rightDisplay: computed('right', 'formatter', function(){
+  rightDisplay: computed('right', 'formatter', function() {
     let formatter = this.get('formatter');
     let right = this.get('right');
     return formatter ? formatter(right) : right;
   }),
 
-  isVisible: computed('left', 'right', function(){
+  isVisible: computed('left', 'right', function() {
     let left = +this.get('left');
     let right = +this.get('right');
     return left === left && right === right;
@@ -180,5 +179,5 @@ export default Component.extend(RequiresScaleSource, {
 
   rightWidth: computed('rightX', 'graphWidth', function() {
     return Math.max(this.get('graphWidth') - this.get('rightX'), 0);
-  }),
+  })
 });

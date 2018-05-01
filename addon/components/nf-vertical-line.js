@@ -60,10 +60,10 @@ export default Component.extend(RequireScaleSource, {
     @private
     @readonly
   */
-  lineX: computed('xScale', 'x', function(){
+  lineX: computed('xScale', 'x', function() {
     let xScale = this.get('xScale');
     let x = this.get('x');
     let px = xScale ? xScale(x) : -1;
     return px && px > 0 ? px : 0;
-  }),
+  })
 });

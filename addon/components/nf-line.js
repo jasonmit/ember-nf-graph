@@ -21,65 +21,73 @@ import RequireScaleSource from 'ember-nf-graph/mixins/graph-requires-scale-sourc
   @uses mixins.graph-graphic-with-tracking-dot
   @uses mixins.graph-requires-scale-source
 */
-export default Component.extend(DataGraphic, SelectableGraphic, LineUtils, RegisteredGraphic, GraphicWithTrackingDot, RequireScaleSource, {
-  layout,
-  tagName: 'g',
+export default Component.extend(
+  DataGraphic,
+  SelectableGraphic,
+  LineUtils,
+  RegisteredGraphic,
+  GraphicWithTrackingDot,
+  RequireScaleSource,
+  {
+    layout,
+    tagName: 'g',
 
-  /**
+    /**
     The parent graph for a component.
     @property graph
     @type components.nf-graph
     @default null
     */
-  graph: null,
+    graph: null,
 
-  /**
+    /**
     The type of D3 interpolator to use to create the line.
     @property interpolator
     @type String
     @default 'linear'
   */
-  interpolator: 'linear',
+    interpolator: 'linear',
 
-  classNameBindings: ['selected', 'selectable'],
+    classNameBindings: ['selected', 'selectable'],
 
-  classNames: ['nf-line'],
+    classNames: ['nf-line'],
 
-  /**
+    /**
     The d3 line function to create the line path.
     @method lineFn
     @param data {Array} the array of coordinate arrays to plot as an SVG path
     @private
     @return {String} an SVG path data string
   */
-  lineFn: computed('xScale', 'yScale', 'interpolator', function() {
-    let xScale = this.get('xScale');
-    let yScale = this.get('yScale');
-    let interpolator = this.get('interpolator');
-    return this.createLineFn(xScale, yScale, interpolator);
-  }),
+    lineFn: computed('xScale', 'yScale', 'interpolator', function() {
+      let xScale = this.get('xScale');
+      let yScale = this.get('yScale');
+      let interpolator = this.get('interpolator');
+      return this.createLineFn(xScale, yScale, interpolator);
+    }),
 
-  /**
+    /**
     The SVG path data string to render the line
     @property d
     @type String
     @private
     @readonly
   */
-  d: computed('renderedData.[]', 'lineFn', function(){
-    let renderedData = this.get('renderedData');
-    let lineFn = this.get('lineFn');
-    return lineFn(renderedData);
-  }),
+    d: computed('renderedData.[]', 'lineFn', function() {
+      let renderedData = this.get('renderedData');
+      let lineFn = this.get('lineFn');
+      return lineFn(renderedData);
+    }),
 
-  /**
+    /**
     Event handler to toggle the `selected` property on click
     @method _toggleSelected
     @private
   */
-  _toggleSelected: on('click', function(){
-    if(this.get('selectable')) {
-      this.toggleProperty('selected');
-    }
-  }),
-});
+    _toggleSelected: on('click', function() {
+      if (this.get('selectable')) {
+        this.toggleProperty('selected');
+      }
+    })
+  }
+);

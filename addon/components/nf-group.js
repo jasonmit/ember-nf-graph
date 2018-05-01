@@ -36,7 +36,7 @@ export default Component.extend(RequireScaleSource, SelectableGraphic, {
   graph: null,
 
   click: function() {
-    if(this.get('selectable')) {
+    if (this.get('selectable')) {
       this.toggleProperty('selected');
     }
   }

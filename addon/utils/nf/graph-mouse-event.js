@@ -36,7 +36,10 @@ export default GraphPosition.extend({
   */
   _mousePoint: computed('originalEvent', 'graphContentElement', {
     get() {
-      return this._getMousePoint(this.get('graphContentElement'), this.get('originalEvent'));
+      return this._getMousePoint(
+        this.get('graphContentElement'),
+        this.get('originalEvent')
+      );
     }
   }),
 
@@ -76,7 +79,7 @@ export default GraphPosition.extend({
         graphX: this.get('mouseX'),
         graphY: this.get('mouseY'),
         source: this.get('source'),
-        graphContentElement: this.get('graphContentElement'),
+        graphContentElement: this.get('graphContentElement')
       });
     }
   }),
@@ -104,7 +107,7 @@ export default GraphPosition.extend({
   x: computed('nearestDataPoint', {
     get() {
       let nearestDataPoint = this.get('nearestDataPoint');
-      this._x =  nearestDataPoint ? nearestDataPoint[0] : undefined;
+      this._x = nearestDataPoint ? nearestDataPoint[0] : undefined;
       return this._x;
     }
   }),
@@ -129,5 +132,5 @@ export default GraphPosition.extend({
     @property data
     @readonly
   */
-  data: reads('nearestDataPoint.data'),
+  data: reads('nearestDataPoint.data')
 });
