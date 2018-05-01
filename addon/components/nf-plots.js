@@ -1,6 +1,6 @@
-import { isArray, A } from '@ember/array';
 import { computed } from '@ember/object';
 import Component from '@ember/component';
+import { isArray, A } from '@ember/array';
 import layout from 'ember-nf-graph/templates/components/nf-plots';
 import DataGraphic from 'ember-nf-graph/mixins/graph-data-graphic';
 import RequireScaleSource from 'ember-nf-graph/mixins/graph-requires-scale-source';

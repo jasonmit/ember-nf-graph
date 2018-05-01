@@ -1,16 +1,17 @@
-import { bool, notEmpty } from '@ember/object/computed';
 import $ from 'jquery';
-import { on } from '@ember/object/evented';
-import { warn } from '@ember/debug';
 import { A } from '@ember/array';
-import { scheduleOnce, schedule, run } from '@ember/runloop';
+import { warn } from '@ember/debug';
 import Component from '@ember/component';
 import { isPresent } from '@ember/utils';
+import { on } from '@ember/object/evented';
 import { computed, observer } from '@ember/object';
-import layout from 'ember-nf-graph/templates/components/nf-graph';
-import GraphPosition from 'ember-nf-graph/utils/nf/graph-position';
+import { bool, notEmpty } from '@ember/object/computed';
+import { scheduleOnce, schedule, run } from '@ember/runloop';
+
 import { getMousePoint } from 'ember-nf-graph/utils/nf/svg-dom';
 import { toArray } from 'ember-nf-graph/utils/nf/array-helpers';
+import layout from 'ember-nf-graph/templates/components/nf-graph';
+import GraphPosition from 'ember-nf-graph/utils/nf/graph-position';
 
 const Observable = Rx.Observable;
 

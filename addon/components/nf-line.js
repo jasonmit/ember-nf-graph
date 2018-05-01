@@ -1,9 +1,9 @@
-import { on } from '@ember/object/evented';
 import { computed } from '@ember/object';
 import Component from '@ember/component';
+import { on } from '@ember/object/evented';
+import LineUtils from 'ember-nf-graph/mixins/graph-line-utils';
 import layout from 'ember-nf-graph/templates/components/nf-line';
 import DataGraphic from 'ember-nf-graph/mixins/graph-data-graphic';
-import LineUtils from 'ember-nf-graph/mixins/graph-line-utils';
 import SelectableGraphic from 'ember-nf-graph/mixins/graph-selectable-graphic';
 import RegisteredGraphic from 'ember-nf-graph/mixins/graph-registered-graphic';
 import GraphicWithTrackingDot from 'ember-nf-graph/mixins/graph-graphic-with-tracking-dot';

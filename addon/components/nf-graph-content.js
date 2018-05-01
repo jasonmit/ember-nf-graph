@@ -1,8 +1,9 @@
-import { schedule } from '@ember/runloop';
 import { A } from '@ember/array';
-import { alias } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import Component from '@ember/component';
+import { schedule } from '@ember/runloop';
+import { alias } from '@ember/object/computed';
+
 import layout from 'ember-nf-graph/templates/components/nf-graph-content';
 import GraphMouseEvent from 'ember-nf-graph/utils/nf/graph-mouse-event';
 

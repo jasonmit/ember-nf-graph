@@ -1,7 +1,7 @@
-import { scheduleOnce } from '@ember/runloop';
-import { on } from '@ember/object/evented';
-import { computed, observer } from '@ember/object';
 import Component from '@ember/component';
+import { on } from '@ember/object/evented';
+import { scheduleOnce } from '@ember/runloop';
+import { computed, observer } from '@ember/object';
 import layout from 'ember-nf-graph/templates/components/nf-right-tick';
 import RequireScaleSource from 'ember-nf-graph/mixins/graph-requires-scale-source';
 

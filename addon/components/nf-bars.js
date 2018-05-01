@@ -2,14 +2,15 @@ import { isArray, A } from '@ember/array';
 import { oneWay } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import Component from '@ember/component';
+
+import { getRectPath } from 'ember-nf-graph/utils/nf/svg-dom';
 import layout from 'ember-nf-graph/templates/components/nf-bars';
 import DataGraphic from 'ember-nf-graph/mixins/graph-data-graphic';
-import RegisteredGraphic from 'ember-nf-graph/mixins/graph-registered-graphic';
+import { normalizeScale } from 'ember-nf-graph/utils/nf/scale-utils';
 import parsePropExpr from 'ember-nf-graph/utils/parse-property-expression';
+import RegisteredGraphic from 'ember-nf-graph/mixins/graph-registered-graphic';
 import RequireScaleSource from 'ember-nf-graph/mixins/graph-requires-scale-source';
 import GraphicWithTrackingDot from 'ember-nf-graph/mixins/graph-graphic-with-tracking-dot';
-import { normalizeScale } from 'ember-nf-graph/utils/nf/scale-utils';
-import { getRectPath } from 'ember-nf-graph/utils/nf/svg-dom';
 
 /**
   Adds a bar graph to an `nf-graph` component.

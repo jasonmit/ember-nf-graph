@@ -1,8 +1,9 @@
-import { scheduleOnce, schedule } from '@ember/runloop';
 import { isArray } from '@ember/array';
 import Mixin from '@ember/object/mixin';
 import { on } from '@ember/object/evented';
 import { computed, observer } from '@ember/object';
+import { scheduleOnce, schedule } from '@ember/runloop';
+
 import parsePropertyExpr from '../utils/parse-property-expression';
 import { nearestIndexTo } from '../utils/nf/array-helpers';
 

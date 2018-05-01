@@ -1,5 +1,6 @@
 import { computed } from '@ember/object';
 import Component from '@ember/component';
+
 import layout from 'ember-nf-graph/templates/components/nf-tick-label';
 
 export default Component.extend({

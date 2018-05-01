@@ -1,9 +1,10 @@
 import { computed } from '@ember/object';
 import Component from '@ember/component';
+
 import layout from 'ember-nf-graph/templates/components/nf-svg-line';
-import RequiresScaleSource from 'ember-nf-graph/mixins/graph-requires-scale-source';
 import { normalizeScale } from 'ember-nf-graph/utils/nf/scale-utils';
 import SelectableGraphic from 'ember-nf-graph/mixins/graph-selectable-graphic';
+import RequiresScaleSource from 'ember-nf-graph/mixins/graph-requires-scale-source';
 
 /**
   Draws a basic line between two points on the graph.

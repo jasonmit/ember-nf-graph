@@ -1,10 +1,10 @@
-import { on } from '@ember/object/evented';
 import { once } from '@ember/runloop';
-import { computed, observer } from '@ember/object';
 import Component from '@ember/component';
+import { on } from '@ember/object/evented';
+import { computed, observer } from '@ember/object';
+import { normalizeScale } from 'ember-nf-graph/utils/nf/scale-utils';
 import layout from 'ember-nf-graph/templates/components/nf-selection-box';
 import RequireScaleSource from 'ember-nf-graph/mixins/graph-requires-scale-source';
-import { normalizeScale } from 'ember-nf-graph/utils/nf/scale-utils';
 
 /**
   Draws a rectangle on an `nf-graph` given domain values `xMin`, `xMax`, `yMin` and `yMax`.

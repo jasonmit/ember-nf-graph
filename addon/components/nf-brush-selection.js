@@ -1,8 +1,9 @@
-import { alias } from '@ember/object/computed';
-import { scheduleOnce } from '@ember/runloop';
-import { on } from '@ember/object/evented';
-import { get, observer, computed } from '@ember/object';
 import Component from '@ember/component';
+import { on } from '@ember/object/evented';
+import { scheduleOnce } from '@ember/runloop';
+import { alias } from '@ember/object/computed';
+import { get, observer, computed } from '@ember/object';
+
 import layout from 'ember-nf-graph/templates/components/nf-brush-selection';
 import RequiresScaleSource from 'ember-nf-graph/mixins/graph-requires-scale-source';
 

@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import layout from 'ember-nf-graph/templates/components/nf-group';
-import RequireScaleSource from 'ember-nf-graph/mixins/graph-requires-scale-source';
 import SelectableGraphic from 'ember-nf-graph/mixins/graph-selectable-graphic';
+import RequireScaleSource from 'ember-nf-graph/mixins/graph-requires-scale-source';
 
 /**
   A grouping tag that provides zooming and offset functionality to it's children.

@@ -1,14 +1,15 @@
 import { computed } from '@ember/object';
 import { on } from '@ember/object/evented';
 import Component from '@ember/component';
+
+import AreaUtils from 'ember-nf-graph/mixins/graph-area-utils';
+import LineUtils from 'ember-nf-graph/mixins/graph-line-utils';
 import layout from 'ember-nf-graph/templates/components/nf-area';
+import DataGraphic from 'ember-nf-graph/mixins/graph-data-graphic';
 import Selectable from 'ember-nf-graph/mixins/graph-selectable-graphic';
 import RegisteredGraphic from 'ember-nf-graph/mixins/graph-registered-graphic';
-import DataGraphic from 'ember-nf-graph/mixins/graph-data-graphic';
-import AreaUtils from 'ember-nf-graph/mixins/graph-area-utils';
-import GraphicWithTrackingDot from 'ember-nf-graph/mixins/graph-graphic-with-tracking-dot';
 import RequireScaleSource from 'ember-nf-graph/mixins/graph-requires-scale-source';
-import LineUtils from 'ember-nf-graph/mixins/graph-line-utils';
+import GraphicWithTrackingDot from 'ember-nf-graph/mixins/graph-graphic-with-tracking-dot';
 
 /**
   Adds an area graph to an `nf-graph` component.

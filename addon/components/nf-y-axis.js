@@ -1,8 +1,9 @@
-import { alias, equal, uniq } from '@ember/object/computed';
 import { A } from '@ember/array';
-import { schedule } from '@ember/runloop';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { schedule } from '@ember/runloop';
+import { alias, equal, uniq } from '@ember/object/computed';
+
 import layout from 'ember-nf-graph/templates/components/nf-y-axis';
 import RequireScaleSource from 'ember-nf-graph/mixins/graph-requires-scale-source';
 

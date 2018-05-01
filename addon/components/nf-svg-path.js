@@ -2,9 +2,10 @@ import { isArray } from '@ember/array';
 import { computed } from '@ember/object';
 import Component from '@ember/component';
 import layout from 'ember-nf-graph/templates/components/nf-svg-path';
-import RequiresScaleSource from 'ember-nf-graph/mixins/graph-requires-scale-source';
+
 import { normalizeScale } from 'ember-nf-graph/utils/nf/scale-utils';
 import SelectableGraphic from 'ember-nf-graph/mixins/graph-selectable-graphic';
+import RequiresScaleSource from 'ember-nf-graph/mixins/graph-requires-scale-source';
 
 /**
   An SVG path primitive that plots based on a graph's scale.

@@ -1,6 +1,7 @@
-import Component from '@ember/component';
 import { assert } from '@ember/debug';
 import { isPresent } from '@ember/utils';
+import Component from '@ember/component';
+
 import layout from '../templates/components/nf-component';
 
 /**

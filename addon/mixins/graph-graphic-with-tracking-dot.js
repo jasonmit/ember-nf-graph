@@ -1,7 +1,8 @@
-import { schedule, scheduleOnce } from '@ember/runloop';
 import Mixin from '@ember/object/mixin';
 import { on } from '@ember/object/evented';
 import { computed, observer } from '@ember/object';
+import { schedule, scheduleOnce } from '@ember/runloop';
+
 import { getMousePoint } from '../utils/nf/svg-dom';
 
 export default Mixin.create({

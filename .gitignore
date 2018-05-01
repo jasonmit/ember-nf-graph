@@ -13,6 +13,7 @@
 /connect.lock
 /coverage/*
 /libpeerconnection.log
+jsconfig.json
 npm-debug.log*
 yarn-error.log
 testem.log

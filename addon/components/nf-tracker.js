@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+
 import layout from 'ember-nf-graph/templates/components/nf-tracker';
 import DataGraphic from 'ember-nf-graph/mixins/graph-data-graphic';
 import RequiresScaleSource from 'ember-nf-graph/mixins/graph-requires-scale-source';

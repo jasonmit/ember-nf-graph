@@ -1,6 +1,6 @@
-import { on } from '@ember/object/evented';
 import { computed } from '@ember/object';
 import Component from '@ember/component';
+import { on } from '@ember/object/evented';
 import layout from 'ember-nf-graph/templates/components/nf-range-marker';
 import RequireScaleSource from 'ember-nf-graph/mixins/graph-requires-scale-source';
 

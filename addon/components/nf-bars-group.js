@@ -1,7 +1,8 @@
-import { schedule } from '@ember/runloop';
 import { A } from '@ember/array';
 import { computed } from '@ember/object';
 import Component from '@ember/component';
+import { schedule } from '@ember/runloop';
+
 import layout from 'ember-nf-graph/templates/components/nf-bars-group';
 import RequiresScaleSource from 'ember-nf-graph/mixins/graph-requires-scale-source';
 

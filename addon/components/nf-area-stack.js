@@ -1,8 +1,9 @@
-import { schedule } from '@ember/runloop';
 import { A } from '@ember/array';
 import { warn } from '@ember/debug';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { schedule } from '@ember/runloop';
+
 import layout from 'ember-nf-graph/templates/components/nf-area-stack';
 
 /**

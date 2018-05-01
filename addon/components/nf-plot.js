@@ -1,9 +1,9 @@
 import { computed } from '@ember/object';
-import { notEmpty, and } from '@ember/object/computed';
 import Component from '@ember/component';
+import { notEmpty, and } from '@ember/object/computed';
+import GraphEvent from 'ember-nf-graph/utils/nf/graph-event';
 import layout from 'ember-nf-graph/templates/components/nf-plot';
 import RequireScaleSource from 'ember-nf-graph/mixins/graph-requires-scale-source';
-import GraphEvent from 'ember-nf-graph/utils/nf/graph-event';
 
 /**
   Plots a group tag on a graph at a given x and y domain coordinate.

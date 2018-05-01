@@ -1,8 +1,9 @@
-import { schedule } from '@ember/runloop';
-import { alias } from '@ember/object/computed';
 import Component from '@ember/component';
-import { on } from '@ember/object/evented';
 import { observer } from '@ember/object';
+import { schedule } from '@ember/runloop';
+import { on } from '@ember/object/evented';
+import { alias } from '@ember/object/computed';
+
 import layout from 'ember-nf-graph/templates/components/nf-crosshairs';
 
 /**

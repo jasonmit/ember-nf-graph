@@ -1,5 +1,5 @@
-import { on } from '@ember/object/evented';
 import Mixin from '@ember/object/mixin';
+import { on } from '@ember/object/evented';
 
 /**
   @namespace mixins

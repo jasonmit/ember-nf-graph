@@ -1,11 +1,12 @@
-import { on } from '@ember/object/evented';
 import { once } from '@ember/runloop';
-import { alias, gte, equal } from '@ember/object/computed';
-import { computed, observer } from '@ember/object';
 import Component from '@ember/component';
+import { on } from '@ember/object/evented';
+import { computed, observer } from '@ember/object';
+import { alias, gte, equal } from '@ember/object/computed';
+
 import layout from 'ember-nf-graph/templates/components/nf-y-diff';
-import RequireScaleSource from 'ember-nf-graph/mixins/graph-requires-scale-source';
 import { normalizeScale } from 'ember-nf-graph/utils/nf/scale-utils';
+import RequireScaleSource from 'ember-nf-graph/mixins/graph-requires-scale-source';
 
 /**
   Draws a box underneath (or over) the y axis to between the given `a` and `b`

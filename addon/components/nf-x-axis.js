@@ -1,8 +1,9 @@
-import { alias, uniq } from '@ember/object/computed';
 import { A } from '@ember/array';
-import { schedule } from '@ember/runloop';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { schedule } from '@ember/runloop';
+import { alias, uniq } from '@ember/object/computed';
+
 import layout from 'ember-nf-graph/templates/components/nf-x-axis';
 import RequireScaleSource from 'ember-nf-graph/mixins/graph-requires-scale-source';
 
@@ -139,6 +140,7 @@ export default Component.extend(RequireScaleSource, {
   transform: computed('x', 'y', function() {
     let x = this.get('x') || 0;
     let y = this.get('y') || 0;
+
     return `translate(${x} ${y})`;
   }),
 

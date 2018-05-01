@@ -1,6 +1,7 @@
 import { computed } from '@ember/object';
-import { alias } from '@ember/object/computed';
 import Component from '@ember/component';
+import { alias } from '@ember/object/computed';
+
 import layout from 'ember-nf-graph/templates/components/nf-vertical-line';
 import RequireScaleSource from 'ember-nf-graph/mixins/graph-requires-scale-source';
 

@@ -1,8 +1,8 @@
 import { once } from '@ember/runloop';
+import Mixin from '@ember/object/mixin';
 import { observer } from '@ember/object';
 import { on } from '@ember/object/evented';
 import { alias } from '@ember/object/computed';
-import Mixin from '@ember/object/mixin';
 
 /**
   Adds functionality to a component to make it a selectable graphic
