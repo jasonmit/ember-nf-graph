@@ -211,12 +211,6 @@ export default Component.extend({
   yLogMin: 0.1,
 
   /**
-    @property hasRendered
-    @private
-  */
-  hasRendered: false,
-
-  /**
     Gets or sets the whether or not multiple selectable graphics may be
     selected simultaneously.
     @property selectMultiple
@@ -1005,10 +999,13 @@ export default Component.extend({
   graphY: computed('paddingTop', 'xAxis.{orient,height}', function() {
     let paddingTop = this.get('paddingTop');
     let xAxisOrient = this.get('xAxis.orient');
+
     if (xAxisOrient === 'top') {
       let xAxisHeight = this.get('xAxis.height') || 0;
+
       return xAxisHeight + paddingTop;
     }
+
     return paddingTop;
   }),
 
@@ -1065,17 +1062,6 @@ export default Component.extend({
     let graphY = this.get('graphY');
 
     return `translate(${graphX} ${graphY})`;
-  }),
-
-  /**
-    Sets `hasRendered` to `true` on `willInsertElement`.
-    @method _notifyHasRendered
-    @private
-  */
-  _notifyHasRendered: on('willInsertElement', function() {
-    schedule('afterRender', () => {
-      this.set('hasRendered', true);
-    });
   }),
 
   /**

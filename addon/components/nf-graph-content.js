@@ -20,7 +20,6 @@ export default Component.extend({
   tagName: 'g',
 
   classNames: ['nf-graph-content'],
-
   attributeBindings: ['transform', 'clip-path'],
 
   'clip-path': computed('graph.contentClipPathId', function() {
@@ -61,6 +60,7 @@ export default Component.extend({
   transform: computed('x', 'y', function() {
     let x = this.get('x');
     let y = this.get('y');
+
     return `translate(${x} ${y})`;
   }),
 
