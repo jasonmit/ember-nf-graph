@@ -1028,6 +1028,7 @@ export default Component.extend({
       let paddingLeft = this.get('paddingLeft') || 0;
       let yAxisWidth = this.get('yAxis.width') || 0;
       let width = this.get('width') || 0;
+
       return Math.max(0, width - paddingRight - paddingLeft - yAxisWidth);
     }
   ),
@@ -1048,6 +1049,7 @@ export default Component.extend({
       let paddingBottom = this.get('paddingBottom') || 0;
       let xAxisHeight = this.get('xAxis.height') || 0;
       let height = this.get('height') || 0;
+
       return Math.max(0, height - paddingTop - paddingBottom - xAxisHeight);
     }
   ),
@@ -1061,6 +1063,7 @@ export default Component.extend({
   graphTransform: computed('graphX', 'graphY', function() {
     let graphX = this.get('graphX');
     let graphY = this.get('graphY');
+
     return `translate(${graphX} ${graphY})`;
   }),
 

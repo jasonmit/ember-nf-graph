@@ -155,6 +155,7 @@ export default Component.extend({
       source: this,
       graphContentElement: this.element
     });
+
     this.trigger('didHoverEnd', context);
 
     if (this.get('hoverEnd')) {
